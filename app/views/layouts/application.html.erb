@@ -9,8 +9,18 @@
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-
-  <body>
+ <header>
+  <nav> <%# Nav Bar to different pages, currently commented out to avoid errors %>
+    <% if user_signed_in? %>
+      <span><%# <%= link_to 'Characters', characters_show-path > %></span>
+      <span><%# <%= link_to 'Groups' show_groups_path > %></span>
+      <span><%# <%= link_to 'Events', show_events_path > %></span>
+    <% end %>
+  </nav>
+ </header>
+  <body>  
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
     <%= yield %>
   </body>
 </html>
