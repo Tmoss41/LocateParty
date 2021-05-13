@@ -1,0 +1,10 @@
+<h1>Profile</h1>
+<%= @user.email %>
+<%= link_to 'New Character' , new_character_path %>
+<% @user.characters.each do |character| %>
+  <p><%= character.name %></p>
+  <p><%= character.race %></p> 
+  <p><%= character.alignment %></p>
+  <p><%= character.class %></p>
+  <p> Level: <%= character.level%></p>
+<% end %>
