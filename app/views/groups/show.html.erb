@@ -1,0 +1,9 @@
+<h1><%= @group.name%></h1>
+
+<h2>Members</h2>
+<% @group.users.each do |member| %>
+<p><%= member.email %></p>
+<% end %>
+
+
+<%= link_to 'Join', join_path, method: :post%>
