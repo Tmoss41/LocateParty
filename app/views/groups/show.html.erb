@@ -1,10 +1,9 @@
-<h1> Show</h1><% @groups.each do |group| %>
-    <p><%= group.name%></p>
-    <p><% group.users.all.each do |member| %>
-        <%= member.email %>
-        <% member.roles.each do |role| %>
-        <%= role.name%>
-        <% end %>
-    <p><%= link_to 'Join', user_add_to_group_path , method: :post, onclick:  %></p>
-    <% end %>
+<h1><%= @group.name%></h1>
+
+<h2>Members</h2>
+<% @group.users.each do |member| %>
+<p><%= member.email %></p>
 <% end %>
+
+
+<%= link_to 'Join', join_path, method: :post%>

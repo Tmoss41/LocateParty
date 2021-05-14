@@ -4,7 +4,8 @@ class GroupsController < ApplicationController
         @groups = current_user.groups
     end
     def show
-        @groups = Group.all
+       @group = Group.find(params[:id]) 
+       session[:current_group] = params[:id]
     end
     def new
         @group = Group.new
@@ -14,6 +15,7 @@ class GroupsController < ApplicationController
         redirect_to groups_path
     end
     def find
+        @groups = Group.all
     end
     private
     def group_params

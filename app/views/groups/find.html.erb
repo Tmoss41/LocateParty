@@ -1,1 +1,11 @@
 <h1>Find</h1>
+<% @groups.each do |group| %>
+    <p><%= link_to group.name, group %></p>
+    <p>Number of Members: <%= group.users.count %>
+    <p><% group.users.each do |member| %>
+        <%if member.has_role? :admin %>
+            <%= member.email %>
+        <% end %>
+    <%# <p><%= link_to 'Join', user_add_to_group_path , method: :post, onclick:  %></p>
+    <% end %>
+<% end %>
