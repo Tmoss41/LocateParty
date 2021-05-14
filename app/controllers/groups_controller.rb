@@ -1,16 +1,19 @@
 class GroupsController < ApplicationController
     def index
-        # authorize User
+        # Checks the database for all groups assigned to the current user 
         @groups = current_user.groups
     end
     def show
+        # Shows a specific group based on the id passed through from the webpage of the user
        @group = Group.find(params[:id]) 
        session[:current_group] = params[:id]
     end
     def new
+        # Saves a place in memory for a new  instance of a group and then redirects user to the new.html.erb page found in /views/groups
         @group = Group.new
     end
     def create
+        # Takes data from the form on the new.html.erb page and creates a add query to the database using the parameters defined in private method, from webpage
         @group = current_user.groups.create(group_params)
         redirect_to groups_path
     end
@@ -19,6 +22,7 @@ class GroupsController < ApplicationController
     end
     private
     def group_params
+        # Permits different parameters to be allowed into database queries for methods relating to the Groups Model, 
         params.require(:group).permit(:name)
     end
 end

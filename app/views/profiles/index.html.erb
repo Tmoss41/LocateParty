@@ -1,5 +1,9 @@
-<h1>Profile</h1>
+<%# Main Profile Page, e.g Character List, Groups user is a part of, Events User is participating in %>
+<h1>Profile</h1> 
+
 <%= @user.email %>
+
+<%# Character List Card %>
 <%= link_to 'New Character' , new_character_path %>
 <% @user.characters.each do |character| %>
   <p><%= link_to character.name, character %></p>
@@ -8,3 +12,7 @@
   <p><%= character.class %></p>
   <p> Level: <%= character.level%></p>
 <% end %>
+
+<%# Group List Card %>
+
+<%# Event List Card %>
