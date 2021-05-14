@@ -2,7 +2,7 @@
 <%= @user.email %>
 <%= link_to 'New Character' , new_character_path %>
 <% @user.characters.each do |character| %>
-  <p><%= character.name %></p>
+  <p><%= link_to character.name, character %></p>
   <p><%= character.race %></p> 
   <p><%= character.alignment %></p>
   <p><%= character.class %></p>
