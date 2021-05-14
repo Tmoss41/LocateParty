@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  race: MyString
+  class: MyString
+  level: 1
+  alignment: MyString
+  user: one
+  name: MyString
+
+two:
+  race: MyString
+  class: MyString
+  level: 1
+  alignment: MyString
+  user: two
+  name: MyString

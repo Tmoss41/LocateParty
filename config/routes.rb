@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: { sessions: 'users/sessions' }
+  get 'user/:id', to: 'profiles#index', as: 'user'
   root to: 'home#index'
+  resources :characters
+  get 'user/:id/characters/new', to: 'characters#new', as: 'user_new_character'
+  get 'groups', to: 'groups#index', as: 'groups'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
