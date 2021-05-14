@@ -1,5 +1,8 @@
 class GroupsController < ApplicationController
     def index
-        authorize User
+        # authorize User
+        @groups = current_user.groups
+    end
+    def show
     end
 end
