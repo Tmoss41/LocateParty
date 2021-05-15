@@ -8,5 +8,6 @@
 
 <%= form_with model: @request_to_join do |f| %>
 <% f.text_field :user_id, value: current_user.email %>
+<% f.number_field :group_id, value: session[:current_group] %>
 <%= f.submit 'Join' %>
 <% end %>
