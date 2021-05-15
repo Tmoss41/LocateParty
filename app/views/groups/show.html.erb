@@ -6,4 +6,7 @@
 <% end %>
 
 
-<%= link_to 'Join', join_path, method: :post%>
+<%= form_with model: @request_to_join do |f| %>
+<% f.text_field :user_id, value: current_user.email %>
+<%= f.submit 'Join' %>
+<% end %>
