@@ -7,4 +7,8 @@ class User < ApplicationRecord
   has_many :characters, dependent: :destroy
   has_many :user_groups, dependent: :destroy
   has_many :groups, through: :user_groups
+  has_many :approved_usergroups, -> { approved }, class_name: 'UserGroup'
+  has_many :approved_groups, through: :approved_usergroups, source: :group
+  has_many :un_approved_usergroups, -> { un_approved }, class_name: 'UserGroup'
+  has_many :un_approved_groups, through: :un_approved_usergroups, source: :group
 end

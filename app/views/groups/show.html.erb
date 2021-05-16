@@ -1,9 +1,10 @@
 <h1><%= @group.name%></h1>
 
 <h2>Members</h2>
-<% @group.users.each do |member| %>
-<p><%= member.email %></p>
+<% @group.approved_users.each do |user| %>
+<%= user.email%>
 <% end %>
+
 
 
 <%= form_with model: @request_to_join do |f| %>

@@ -1,7 +1,7 @@
 <h1>Find</h1>
 <% @groups.each do |group| %>
     <p><%= link_to group.name, group %></p>
-    <p>Number of Members: <%= group.users.count %>
+    <p>Number of Members: <%= group.approved_users.count %>
     <p><% group.users.each do |member| %>
         <%if member.has_role? :admin %>
             <%= member.email %>

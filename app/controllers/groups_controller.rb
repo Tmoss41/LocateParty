@@ -4,15 +4,16 @@ class GroupsController < ApplicationController
         @groups = current_user.groups
     end
     def show
+        @group = Group.find(params[:id])
         # Shows a specific group based on the id passed through from the webpage of the user
-       @group = Group.find(params[:id]) 
        session[:current_group] = params[:id]
+       @request_to_join = UserGroup.new
     end
-    def new
+def new
         # Saves a place in memory for a new  instance of a group and then redirects user to the new.html.erb page found in /views/groups
         @group = Group.new
     end
-    def create
+def create
         # Takes data from the form on the new.html.erb page and creates a add query to the database using the parameters defined in private method, from webpage
         @group = current_user.groups.create(group_params)
         redirect_to groups_path
