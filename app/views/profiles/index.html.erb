@@ -13,6 +13,28 @@
   <p> Level: <%= character.level%></p>
 <% end %>
 
+<% @user.approved_groups.each do |group| %>
+<%= group.name %>
+<% end %>
+<% if @user.has_role? :admin %>
+  <p> You are an admin </p>
+  <% @user.groups.each do |group| %>
+    <% group.un_approved_users.each do |member| %>
+      <%= member.email %>
+      <%= member.id%>
+      <%= form_with model: @groups , url: accept_request_path, method: :post do |f| %>
+        <%= f.hidden_field :user_id, value: member.id %>
+        <%= f.hidden_field :group_id, value: group.id%> 
+        <%= f.submit 'Accept'%>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
+<%# 
+<% @groups.group.each do |f| %>
+<%# <%= f.user %>
+<%# <% end %> %> %> %>
+
 <%# Group List Card %>
 
 <%# Event List Card %>
