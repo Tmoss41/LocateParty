@@ -25,11 +25,12 @@
     <%= link_to 'Edit', user_edit_character_path(character) %>
   <% end %>
 </div>
-<div>
+
 <%# <% @user.approved_groups.each do |group| %>
 <%# <p><%= group.name %></p>
 <%# <% end %>
 <% if @user.has_role? :admin %>
+<div>
   <h1>Group Join Requests</h1>
   <p> You are an admin </p>
   <% @user.groups.each do |group| %>
@@ -43,8 +44,9 @@
       <% end %>
     <% end %>
   <% end %>
-<% end %>
 </div>
+<% end %>
+
 
 <%# Group List Card %>
 <div>
@@ -68,7 +70,7 @@
 
 <div>
   <h1> Games</h1>
-  <% current_user.groups.each do |group|
+  <% current_user.approved_groups.each do |group|
     group.games.each do |game| %>  
       <p><%= game.name %></p>
       <p>Time of Game:<%= game.time %></p>
