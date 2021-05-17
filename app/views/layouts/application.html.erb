@@ -13,11 +13,21 @@
   <nav> <%# Nav Bar to different pages, currently commented out to avoid errors %>
     <% if user_signed_in? %>
       <span>Characters<%# <%= link_to 'Characters', characters_show-path > %></span>
-      <span><%= link_to 'Groups', groups_path %></span>
       <span>Events<%# <%= link_to 'Events', show_events_path > %></span>
       <span><%= link_to 'Profile', user_path(current_user) %></span>
+      <% if !user_signed_in?%>
+        <%= link_to 'Login', new_user_session_path %>
+        <%= link_to 'Sign Up', new_user_registration_path %>
+      <% end %>
+      <% if user_signed_in? %>
+        <%= link_to 'Sign out', destroy_user_session_path, method: :delete %>
+      <% end %>
     <% end %>
   </nav>
+  <div id="login"> 
+  
+</div>
+
  </header>
   <body>  
       <p class="notice"><%= notice %></p>

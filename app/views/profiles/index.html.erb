@@ -29,6 +29,7 @@
 <%= group.name %>
 <% end %>
 <% if @user.has_role? :admin %>
+  <h1>Group Join Requests</h1>
   <p> You are an admin </p>
   <% @user.groups.each do |group| %>
     <% group.un_approved_users.each do |member| %>
