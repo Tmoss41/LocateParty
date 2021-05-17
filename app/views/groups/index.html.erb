@@ -9,7 +9,6 @@
 <%= f.text_field :name %>
 <%= f.submit 'Find a Group' %>
 <% end %>
-<%= link_to 'Find a group', find_path %>
 <% current_user.approved_groups.each do |group| %>
 <%= group.name %>
 <% end %>

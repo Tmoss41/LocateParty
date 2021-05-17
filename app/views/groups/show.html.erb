@@ -1,6 +1,8 @@
 <h1><%= @group.name%></h1>
 
 <h2>Members</h2>
+<%= @group.suburb %>
+<%= @group.state %>
 <% @group.approved_users.each do |user| %>
 <%= user.email%>
 <% end %>
