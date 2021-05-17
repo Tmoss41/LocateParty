@@ -22,13 +22,15 @@
     <p><%= character.alignment %></p>
     <p><%= character.class %></p>
     <p> Level: <%= character.level%></p>
+    <%= link_to 'Edit', user_edit_character_path(character) %>
   <% end %>
 </div>
-<div>
-<% @user.approved_groups.each do |group| %>
-<%= group.name %>
-<% end %>
+
+<%# <% @user.approved_groups.each do |group| %>
+<%# <p><%= group.name %></p>
+<%# <% end %>
 <% if @user.has_role? :admin %>
+<div>
   <h1>Group Join Requests</h1>
   <p> You are an admin </p>
   <% @user.groups.each do |group| %>
@@ -42,12 +44,16 @@
       <% end %>
     <% end %>
   <% end %>
-<% end %>
 </div>
+<% end %>
+
 
 <%# Group List Card %>
 <div>
   <h1> My Groups</h1>
+  <% current_user.approved_groups.each do |group| %>
+    <p><%= group.name %></p>
+  <% end %>
   <%# Authorizing Function, if User is an admin they will be able to create new groups %>
   <% if current_user.has_role? :admin %>
     <%= link_to 'New Group', new_group_path %>
@@ -57,20 +63,18 @@
     <%= f.text_field :name %>
     <%= f.submit 'Find a Group' %>
   <% end %>
-  <% current_user.approved_groups.each do |group| %>
-    <%= group.name %>
-  <% end %>
+  
 </div>
 
 <%# Event List Card %>
 
 <div>
   <h1> Games</h1>
-  <% current_user.groups.each do |group|
+  <% current_user.approved_groups.each do |group|
     group.games.each do |game| %>  
       <p><%= game.name %></p>
-      <%= game.time %>
-      <%= game.date %>
+      <p>Time of Game:<%= game.time %></p>
+      <p>Date of Event: <%= game.date %></p>
     <% end %>
   <% end %>
 </div>

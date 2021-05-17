@@ -9,6 +9,14 @@ class CharactersController < ApplicationController
     def show
         @character = current_user.characters.find(params[:id])
     end
+    def edit
+        @character = current_user.characters.find(params[:id])
+    end
+    def update
+        @character = current_user.characters.find(params[:id])
+        @character.update(character_params)
+        redirect_to current_user
+    end
     private
 
     def character_params

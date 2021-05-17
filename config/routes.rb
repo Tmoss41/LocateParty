@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   # Routes Relating to the Characters CRUD Functionality
   resources :characters
   get 'user/:id/characters/new', to: 'characters#new', as: 'user_new_character'
+  get 'user/:id/characters/edit', to: 'characters#edit', as: 'user_edit_character'
 
   # Routes Relating to the Group CRUD Functionality
   get 'groups', to: 'groups#index'
