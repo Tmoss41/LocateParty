@@ -8,6 +8,7 @@ class UserGroupsController < ApplicationController
   end
   def approved
     UserGroup.where(['user_id = ? and group_id = ?' , params[:user_group][:user_id], params[:user_group][:group_id]]).update(approved: true)
+    redirect_to user_path
     # render json: params
   end
   private 

@@ -19,7 +19,7 @@ def create
         redirect_to groups_path
     end
     def find
-        @groups = Group.all
+        @groups = Group.where("name LIKE ?", "%#{params[:name]}%")
     end
     private
     def group_params
