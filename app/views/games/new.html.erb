@@ -1,0 +1,8 @@
+<h1> New Game Event</h1>
+<%= form_with model: @game do |f| %>
+    <%= f.text_field :name %>
+    <%= f.date_field :date %>
+    <%= f.time_field :time %>
+    <%= f.collection_select :group_id , @group ,:id, :name %>
+    <%= f.submit%>
+<% end %>

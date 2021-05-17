@@ -5,7 +5,10 @@
     <%= link_to 'New Group', new_group_path %>
 <% end %>
 <%# If the user wants to find another group, this will link to the find.html.erb %>
-<%= link_to 'Find a group', find_path %>
-<% @groups.each do |group| %>
+<%= form_with url: find_path, method: :post do |f| %>
+<%= f.text_field :name %>
+<%= f.submit 'Find a Group' %>
+<% end %>
+<% current_user.approved_groups.each do |group| %>
 <%= group.name %>
 <% end %>

@@ -2,5 +2,9 @@
 <%= form_with model: @group do |f| %>
 <%= f.label :name %>
 <%= f.text_field :name %>
+<%= f.label :suburb %>
+<%= f.text_field :suburb %>
+<%= f.label :state %>
+<%= f.text_field :state %>
 <%= f.submit%>
 <% end %>

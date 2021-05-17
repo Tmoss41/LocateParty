@@ -1,18 +1,30 @@
 <%# Main Profile Page, e.g Character List, Groups user is a part of, Events User is participating in %>
 <h1>Profile</h1> 
-
+<style> 
+  article{
+    display: flex;
+  }
+  div{
+    padding: 10px;
+    border: 2px solid black;
+    padding: 10px;
+  }
+</style>
 <%= @user.email %>
-
+<article>
 <%# Character List Card %>
-<%= link_to 'New Character' , new_character_path %>
-<% @user.characters.each do |character| %>
-  <p><%= link_to character.name, character %></p>
-  <p><%= character.race %></p> 
-  <p><%= character.alignment %></p>
-  <p><%= character.class %></p>
-  <p> Level: <%= character.level%></p>
-<% end %>
-
+<div> 
+  <h1>My Characters </h1>
+  <%= link_to 'New Character' , new_character_path %>
+  <% @user.characters.each do |character| %>
+    <p><%= link_to character.name, character %></p>
+    <p><%= character.race %></p> 
+    <p><%= character.alignment %></p>
+    <p><%= character.class %></p>
+    <p> Level: <%= character.level%></p>
+  <% end %>
+</div>
+<div>
 <% @user.approved_groups.each do |group| %>
 <%= group.name %>
 <% end %>
@@ -30,11 +42,36 @@
     <% end %>
   <% end %>
 <% end %>
-<%# 
-<% @groups.group.each do |f| %>
-<%# <%= f.user %>
-<%# <% end %> %> %> %>
+</div>
 
 <%# Group List Card %>
+<div>
+  <h1> My Groups</h1>
+  <%# Authorizing Function, if User is an admin they will be able to create new groups %>
+  <% if current_user.has_role? :admin %>
+    <%= link_to 'New Group', new_group_path %>
+  <% end %>
+<%# If the user wants to find another group, this will link to the find.html.erb %>
+  <%= form_with url: find_path, method: :post do |f| %>
+    <%= f.text_field :name %>
+    <%= f.submit 'Find a Group' %>
+  <% end %>
+  <% current_user.approved_groups.each do |group| %>
+    <%= group.name %>
+  <% end %>
+</div>
 
 <%# Event List Card %>
+
+<div>
+  <h1> Games</h1>
+  <% current_user.groups.each do |group|
+    group.games.each do |game| %>  
+      <p><%= game.name %></p>
+      <%= game.time %>
+      <%= game.date %>
+    <% end %>
+  <% end %>
+</div>
+
+</article>

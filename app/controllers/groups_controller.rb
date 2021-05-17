@@ -19,11 +19,11 @@ def create
         redirect_to groups_path
     end
     def find
-        @groups = Group.all
+        @groups = Group.where("name LIKE ?", "%#{params[:name]}%")
     end
     private
     def group_params
         # Permits different parameters to be allowed into database queries for methods relating to the Groups Model, 
-        params.require(:group).permit(:name)
+        params.require(:group).permit(:name, :suburb, :state)
     end
 end

@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   # Routes Relating to the Group CRUD Functionality
   get 'groups', to: 'groups#index'
   post 'groups', to: 'groups#create'
-  get 'groups/find' , to: 'groups#find', as: 'find'
+  post 'groups/find' , to: 'groups#find', as: 'find'
   # post 'join', to: 'user_groups#join', as: 'join'
   get 'groups/new', to: 'groups#new', as: 'new_group'
   get 'group/:id' , to: 'groups#show', as: 'group'
@@ -21,4 +21,7 @@ Rails.application.routes.draw do
   post 'accepted_request', to: 'user_groups#approved', as: 'accept_request'
   patch 'accepted_request', to: 'user_groups#approved'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  get 'games/new', to: 'games#new', as: 'games'
+  post 'games/new', to: 'games#create'
+  get 'games', to: 'games#index', as: 'games_list'
 end
