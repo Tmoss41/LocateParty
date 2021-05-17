@@ -7,6 +7,13 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 
-
-User.desroy_all
+group_sample_names = ['Testing Gruop 1', 'Testing Group 2', 'Testing Group 3']
+group_sample_suburbs = ['Milton', 'Auchenflower', 'Mt Gravatt', 'Ipswich']
+character_sample_names = ['Tim', 'Ben', 'Chelsey', 'Gill', 'Nicholas']
 Group.destroy_all
+Character.destroy_all
+
+User.all.each do |user|
+    user.groups.create(name: group_sample_names.sample, suburb: group_sample_suburbs.sample , state: 'QLD' )
+    user.characters.create(name: character_sample_names.sample, race: 'Elf', character_class: 'Bard', alignment: 'Neutral', level: 1)
+end
