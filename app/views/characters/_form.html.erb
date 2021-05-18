@@ -1,0 +1,13 @@
+x<%= form_with model: @character do |f| %>
+<%= f.label :name %>
+<p><%= f.text_field :name %></p>
+<p><%= f.label :race %></p>
+<p><%= f.text_field :race %></p>
+<p><%= f.label :alignment %></p>
+<p><%= f.text_field :alignment %></p>
+<p><%= f.label :level %></p>
+<p><%= f.number_field :level %></p>
+<p><%= f.label :class %></p>
+<p><%= f.text_field :character_class %></p>
+<%= f.submit %>
+<% end %>

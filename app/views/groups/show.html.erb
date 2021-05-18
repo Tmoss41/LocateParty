@@ -1,6 +1,8 @@
 <h1><%= @group.name%></h1>
 
 <h2>Members</h2>
+<%= @group.suburb %>
+<%= @group.state %>
 <% @group.approved_users.each do |user| %>
 <%= user.email%>
 <% end %>
@@ -8,7 +10,7 @@
 
 
 <%= form_with model: @request_to_join do |f| %>
-<% f.text_field :user_id, value: current_user.email %>
+<% f.text_field :user_id, value: current_user.id %>
 <% f.number_field :group_id, value: session[:current_group] %>
 <%= f.submit 'Join' %>
 <% end %>

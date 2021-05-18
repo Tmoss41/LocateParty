@@ -10,11 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 ActiveRecord::Schema.define(version: 2021_05_16_033420) do
 =======
 ActiveRecord::Schema.define(version: 2021_05_18_060945) do
 >>>>>>> Stashed changes
+=======
+ActiveRecord::Schema.define(version: 2021_05_18_042729) do
+>>>>>>> 838c0be6fc666f6c90b3988c60e959f7a32ab91d
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,16 +63,31 @@ ActiveRecord::Schema.define(version: 2021_05_18_060945) do
     t.index ["user_id"], name: "index_characters_on_user_id"
   end
 
+  create_table "games", force: :cascade do |t|
+    t.string "name"
+    t.date "date"
+    t.time "time"
+    t.bigint "group_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["group_id"], name: "index_games_on_group_id"
+  end
+
   create_table "groups", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
     t.string "suburb"
     t.string "state"
     t.string "admin_name"
 >>>>>>> Stashed changes
+=======
+    t.string "suburb"
+    t.string "state"
+>>>>>>> 838c0be6fc666f6c90b3988c60e959f7a32ab91d
   end
 
   create_table "roles", force: :cascade do |t|
@@ -99,6 +118,8 @@ ActiveRecord::Schema.define(version: 2021_05_18_060945) do
     t.datetime "remember_created_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "first_name"
+    t.string "last_name"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -114,6 +135,7 @@ ActiveRecord::Schema.define(version: 2021_05_18_060945) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "characters", "users"
+  add_foreign_key "games", "groups"
   add_foreign_key "user_groups", "groups"
   add_foreign_key "user_groups", "users"
 end
