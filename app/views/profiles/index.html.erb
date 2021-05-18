@@ -55,6 +55,13 @@
   <h1> My Groups</h1>
   <% current_user.approved_groups.each do |group| %>
     <h3><%= group.name %></h3><%= link_to 'Delete', delete_group_path(group), method: :delete if current_user.has_role? :admin%>
+    <% group.users.each do |user| %>
+      <p><%= user.full_name_to_csv%></p>
+      <% if current_user.has_role? :admin %>
+      <%# <%= link_to 'Remove User'%> Testing %>
+      <% end %>
+    <% end %>
+    
   <% end %>
   <%# Authorizing Function, if User is an admin they will be able to create new groups %>
   <% if current_user.has_role? :admin %>

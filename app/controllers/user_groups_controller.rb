@@ -19,4 +19,7 @@ class UserGroupsController < ApplicationController
   def set_group_and_user_params
     params.require(:user_group).permit(:user_id, :group_id)
   end
+  def show
+    @usergroup = UserGroup.where("group_id = #{params[:id]}")
+  end
 end

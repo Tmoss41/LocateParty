@@ -18,17 +18,11 @@ Rails.application.routes.draw do
   get 'groups/new', to: 'groups#new', as: 'new_group'
   get 'group/:id' , to: 'groups#show', as: 'group'
   delete 'group/:id', to: 'groups#delete', as: 'delete_group'
-
+  get 'group/:id/edit' , to: 'groups#edit', as: 'edit_group'
   # Routes Relating to UserGroup Functionality, such as adding a new member to a group
   post 'join', to: 'user_groups#join', as: 'user_groups'
   post 'accepted_request', to: 'user_groups#approved', as: 'accept_request'
   patch 'accepted_request', to: 'user_groups#approved'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  # get 'games/new', to: 'games#new', as: 'games'
-  # post 'games/new', to: 'games#create'
-  # get 'games', to: 'games#index', as: 'games_list'
-  # delete 'games/:id/delete', to: 'games#delete', as: 'games_delete_instance'
-  # get 'games/:id/edit', to: 'games#edit', as: 'games_edit_instance'
-  # post 'games/:id/edit', to: 'games#update'
   resources :games
 end
