@@ -53,7 +53,7 @@
 <div>
   <h1> My Groups</h1>
   <% current_user.approved_groups.each do |group| %>
-    <h3><%= group.name %></h3>
+    <h3><%= group.name %></h3><%= link_to 'Delete', delete_group_path(group), method: :delete if current_user.has_role? :admin%>
   <% end %>
   <%# Authorizing Function, if User is an admin they will be able to create new groups %>
   <% if current_user.has_role? :admin %>
@@ -72,11 +72,15 @@
 <div>
   <h1> Games</h1>
     <%= link_to 'New Game', games_path if current_user.has_role? :admin %>
-  <% current_user.approved_groups.each do |group|
-    group.games.each do |game| %>  
+  <% current_user.approved_groups.each do |group| %>
+    <h2><%= group.name %></h2>
+    <% group.games.each do |game| %>  
       <h3><%= game.name %></h3>
       <p>Time of Game:<%= game.time %></p>
       <p>Date of Event: <%= game.date %></p>
+      <% if current_user.has_role? :admin %>
+      <%= link_to 'Delete' , games_delete_instance_path(game), method: :delete %>
+      <% end %>
     <% end %>
   <% end %>
 </div>

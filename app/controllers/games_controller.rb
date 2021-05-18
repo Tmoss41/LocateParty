@@ -10,6 +10,10 @@ class GamesController < ApplicationController
         @game  = Game.create(game_params)
         redirect_to current_user
     end
+    def delete
+        Game.find(params[:id]).destroy
+        redirect_to current_user
+    end
     private
     def game_params
         params.require(:game).permit(:name, :date, :time, :group_id)

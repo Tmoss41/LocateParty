@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   # post 'join', to: 'user_groups#join', as: 'join'
   get 'groups/new', to: 'groups#new', as: 'new_group'
   get 'group/:id' , to: 'groups#show', as: 'group'
+  delete 'group/:id', to: 'groups#delete', as: 'delete_group'
 
   # Routes Relating to UserGroup Functionality, such as adding a new member to a group
   post 'join', to: 'user_groups#join', as: 'user_groups'
@@ -26,4 +27,5 @@ Rails.application.routes.draw do
   get 'games/new', to: 'games#new', as: 'games'
   post 'games/new', to: 'games#create'
   get 'games', to: 'games#index', as: 'games_list'
+  delete 'games/delete', to: 'games#delete', as: 'games_delete_instance'
 end
