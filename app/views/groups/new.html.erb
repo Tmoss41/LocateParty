@@ -7,4 +7,5 @@
 <%= f.label :state %>
 <%= f.text_field :state %>
 <%= f.submit%>
+<%= f.hidden_field :admin_name, value: current_user.full_name_to_csv %>
 <% end %>

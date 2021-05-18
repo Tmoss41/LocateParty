@@ -34,6 +34,6 @@ class GroupsController < ApplicationController
     private
     def group_params
         # Permits different parameters to be allowed into database queries for methods relating to the Groups Model, 
-        params.require(:group).permit(:name, :suburb, :state)
+        params.require(:group).permit(:name, :suburb, :state, :admin_name)
     end
 end

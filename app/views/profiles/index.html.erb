@@ -16,7 +16,7 @@
 <div> 
   <h1>My Characters </h1>
   <%= link_to 'New Character' , new_character_path %>
-  <% current_user.characters.each do |character| %>
+  <% @user.characters.each do |character| %>
     <h2><%= link_to character.name, character %></h2>
     <p><%= character.race %></p> 
     <p><%= character.alignment %></p>
@@ -34,14 +34,15 @@
 <div>
   <h1>Group Join Requests</h1>
   <p> You are an admin </p>
-  <% @user.groups.each do |group| %>
-    <% group.un_approved_users.each do |member| %>
+  <% current_user.groups.each do |group| %>
+    <% group.un_approved_users.each do |member| if current_user.full_name_to_csv == group.admin_name %>
       <%= member.email %>
       <%= member.id%>
       <%= form_with model: @groups , url: accept_request_path, method: :post do |f| %>
         <%= f.hidden_field :user_id, value: member.id %>
         <%= f.hidden_field :group_id, value: group.id%> 
         <%= f.submit 'Accept'%>
+        <% end %>
       <% end %>
     <% end %>
   <% end %>
