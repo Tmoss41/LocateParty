@@ -17,6 +17,7 @@ class GroupsController < ApplicationController
         # Takes data from the form on the new.html.erb page and creates a add query to the database using the parameters defined in private method, from webpage
         @group = current_user.groups.new(group_params)
         if @group.save
+            UserGroup.create(user_id: current_user.id, group_id: @group.id, approved: true)
             redirect_to current_user
         else
             flash.alert = 'Group Name Taken, please try again'

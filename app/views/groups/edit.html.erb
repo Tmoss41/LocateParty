@@ -1,0 +1,5 @@
+<h1> Edit</h1>
+
+<% @group.users.each do |user| %>
+<%= user.full_name_to_csv %><% link_to 'Delete', delete_group_member(user, @group)%>
+<% end %>

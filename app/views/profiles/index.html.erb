@@ -51,24 +51,33 @@
 
 
 <%# Group List Card %>
+<%# If the user wants to find another group, this will link to the find.html.erb %>
+
+  
 <div>
+  <%= form_with url: find_path, method: :post do |f| %>
+    <%= f.text_field :name %>
+    <%= f.submit 'Find a Group' %>
+  <% end %>
   <h1> My Groups</h1>
   <% current_user.approved_groups.each do |group| %>
     <h3><%= group.name %></h3><%= link_to 'Delete', delete_group_path(group), method: :delete if current_user.has_role? :admin%>
+    <% group.users.each do |user| %>
+      <p><%= user.full_name_to_csv%></p>
+      <% if current_user.has_role? :admin %>
+      <%# <%= link_to 'Remove User'%> Testing %>
+      <% end %>
+    <% end %>
+    
   <% end %>
   <%# Authorizing Function, if User is an admin they will be able to create new groups %>
   <% if current_user.has_role? :admin %>
     <%= link_to 'New Group', new_group_path %>
   <% end %>
-<%# If the user wants to find another group, this will link to the find.html.erb %>
-  <%= form_with url: find_path, method: :post do |f| %>
-    <%= f.text_field :name %>
-    <%= f.submit 'Find a Group' %>
-  <% end %>
-  
+
 </div>
 
-<%# Event List Card %>
+<%# Game List Card %>
 
 <div>
   <h1> Games</h1>
@@ -80,7 +89,7 @@
       <p>Time of Game:<%= game.time %></p>
       <p>Date of Event: <%= game.date %></p>
       <% if current_user.has_role? :admin %>
-      <%= link_to 'Delete' , games_path(game), method: :delete %>
+      <%= link_to 'Delete' , game_path(game.id), method: :delete %>
       <%= link_to 'Edit' , edit_game_path(game) %>
       <% end %>
     <% end %>
