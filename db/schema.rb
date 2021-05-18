@@ -10,15 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-ActiveRecord::Schema.define(version: 2021_05_16_033420) do
-=======
 ActiveRecord::Schema.define(version: 2021_05_18_060945) do
->>>>>>> Stashed changes
-=======
-ActiveRecord::Schema.define(version: 2021_05_18_042729) do
->>>>>>> 838c0be6fc666f6c90b3988c60e959f7a32ab91d
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,17 +69,9 @@ ActiveRecord::Schema.define(version: 2021_05_18_042729) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-=======
     t.string "suburb"
     t.string "state"
     t.string "admin_name"
->>>>>>> Stashed changes
-=======
-    t.string "suburb"
-    t.string "state"
->>>>>>> 838c0be6fc666f6c90b3988c60e959f7a32ab91d
   end
 
   create_table "roles", force: :cascade do |t|
