@@ -16,7 +16,7 @@
 <div> 
   <h1>My Characters </h1>
   <%= link_to 'New Character' , new_character_path %>
-  <% @user.characters.each do |character| %>
+  <% current_user.characters.each do |character| %>
     <h2><%= link_to character.name, character %></h2>
     <p><%= character.race %></p> 
     <p><%= character.alignment %></p>
@@ -30,7 +30,7 @@
 <%# <% @user.approved_groups.each do |group| %>
 <%# <p><%= group.name %></p>
 <%# <% end %>
-<% if @user.has_role? :admin %>
+<% if current_user.has_role? :admin %>
 <div>
   <h1>Group Join Requests</h1>
   <p> You are an admin </p>

@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   # Routes Relating to User Model and Signup Functions
-  devise_for :users, controllers: { sessions: 'users/sessions' }
+  devise_for :users, controllers: { sessions: 'users/sessions', registrations: 'users/registrations' }
   get 'user/:id', to: 'profiles#index', as: 'user'
   # Root Page
   root to: 'home#index'
