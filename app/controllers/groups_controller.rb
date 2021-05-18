@@ -9,11 +9,11 @@ class GroupsController < ApplicationController
        session[:current_group] = params[:id]
        @request_to_join = UserGroup.new
     end
-def new
+    def new
         # Saves a place in memory for a new  instance of a group and then redirects user to the new.html.erb page found in /views/groups
         @group = Group.new
     end
-def create
+    def create
         # Takes data from the form on the new.html.erb page and creates a add query to the database using the parameters defined in private method, from webpage
         @group = current_user.groups.new(group_params)
         if @group.save
@@ -21,12 +21,15 @@ def create
         else
             flash.alert = 'Group Name Taken, please try again'
             redirect_to new_group_path
-        end
-        
+        end    
         # render plain: @group.errors.full_messages
     end
     def find
         @groups = Group.where("name LIKE ?", "%#{params[:name]}%")
+    end
+    def delete
+        Group.find(params[:id]).destroy
+        redirect_to current_user
     end
     private
     def group_params

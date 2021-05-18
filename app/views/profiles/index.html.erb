@@ -16,20 +16,21 @@
 <div> 
   <h1>My Characters </h1>
   <%= link_to 'New Character' , new_character_path %>
-  <% @user.characters.each do |character| %>
-    <p><%= link_to character.name, character %></p>
+  <% current_user.characters.each do |character| %>
+    <h2><%= link_to character.name, character %></h2>
     <p><%= character.race %></p> 
     <p><%= character.alignment %></p>
     <p><%= character.class %></p>
     <p> Level: <%= character.level%></p>
     <%= link_to 'Edit', user_edit_character_path(character) %>
+    <%= link_to 'Delete', user_delete_character_path(character), method: :delete %>
   <% end %>
 </div>
 
 <%# <% @user.approved_groups.each do |group| %>
 <%# <p><%= group.name %></p>
 <%# <% end %>
-<% if @user.has_role? :admin %>
+<% if current_user.has_role? :admin %>
 <div>
   <h1>Group Join Requests</h1>
   <p> You are an admin </p>
@@ -52,7 +53,7 @@
 <div>
   <h1> My Groups</h1>
   <% current_user.approved_groups.each do |group| %>
-    <p><%= group.name %></p>
+    <h3><%= group.name %></h3><%= link_to 'Delete', delete_group_path(group), method: :delete if current_user.has_role? :admin%>
   <% end %>
   <%# Authorizing Function, if User is an admin they will be able to create new groups %>
   <% if current_user.has_role? :admin %>
@@ -70,11 +71,17 @@
 
 <div>
   <h1> Games</h1>
-  <% current_user.approved_groups.each do |group|
-    group.games.each do |game| %>  
-      <p><%= game.name %></p>
+    <%= link_to 'New Game', new_game_path if current_user.has_role? :admin %>
+  <% current_user.approved_groups.each do |group| %>
+    <h2><%= group.name %></h2>
+    <% group.games.each do |game| %>  
+      <h3><%= game.name %></h3>
       <p>Time of Game:<%= game.time %></p>
       <p>Date of Event: <%= game.date %></p>
+      <% if current_user.has_role? :admin %>
+      <%= link_to 'Delete' , games_path(game), method: :delete %>
+      <%= link_to 'Edit' , edit_game_path(game) %>
+      <% end %>
     <% end %>
   <% end %>
 </div>

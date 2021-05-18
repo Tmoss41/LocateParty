@@ -1,5 +1,5 @@
 class Group < ApplicationRecord
-  has_many :games
+  has_many :games, dependent: :destroy
   has_many :user_groups, dependent: :destroy
   has_many :users, through: :user_groups
   has_many :approved_usergroups, -> { approved }, class_name: 'UserGroup'

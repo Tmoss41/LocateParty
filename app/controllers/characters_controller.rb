@@ -17,6 +17,10 @@ class CharactersController < ApplicationController
         @character.update(character_params)
         redirect_to current_user
     end
+    def delete
+        Character.find(params[:id]).destroy
+        redirect_to current_user
+    end
     private
 
     def character_params
