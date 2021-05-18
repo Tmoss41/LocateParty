@@ -24,6 +24,10 @@ def create
     private
     def group_params
         # Permits different parameters to be allowed into database queries for methods relating to the Groups Model, 
+<<<<<<< Updated upstream
         params.require(:group).permit(:name)
+=======
+        params.require(:group).permit(:name, :suburb, :state, :admin_name)
+>>>>>>> Stashed changes
     end
 end

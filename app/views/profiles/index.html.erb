@@ -4,6 +4,7 @@
 <%= @user.email %>
 
 <%# Character List Card %>
+<<<<<<< Updated upstream
 <%= link_to 'New Character' , new_character_path %>
 <% @user.characters.each do |character| %>
   <p><%= link_to character.name, character %></p>
@@ -12,20 +13,36 @@
   <p><%= character.class %></p>
   <p> Level: <%= character.level%></p>
 <% end %>
+=======
+<div> 
+  <h1>My Characters </h1>
+  <%= link_to 'New Character' , new_character_path %>
+  <% @user.characters.each do |character| %>
+    <h2><%= link_to character.name, character %></h2>
+    <p><%= character.race %></p> 
+    <p><%= character.alignment %></p>
+    <p><%= character.class %></p>
+    <p> Level: <%= character.level%></p>
+    <%= link_to 'Edit', user_edit_character_path(character) %>
+    <%= link_to 'Delete', user_delete_character_path(character), method: :delete %>
+  <% end %>
+</div>
+>>>>>>> Stashed changes
 
 <% @user.approved_groups.each do |group| %>
 <%= group.name %>
 <% end %>
 <% if @user.has_role? :admin %>
   <p> You are an admin </p>
-  <% @user.groups.each do |group| %>
-    <% group.un_approved_users.each do |member| %>
+  <% current_user.groups.each do |group| %>
+    <% group.un_approved_users.each do |member| if current_user.full_name_to_csv == group.admin_name%>
       <%= member.email %>
       <%= member.id%>
       <%= form_with model: @groups , url: accept_request_path, method: :post do |f| %>
         <%= f.hidden_field :user_id, value: member.id %>
         <%= f.hidden_field :group_id, value: group.id%> 
         <%= f.submit 'Accept'%>
+        <% end %>
       <% end %>
     <% end %>
   <% end %>
