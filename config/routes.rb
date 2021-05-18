@@ -24,8 +24,11 @@ Rails.application.routes.draw do
   post 'accepted_request', to: 'user_groups#approved', as: 'accept_request'
   patch 'accepted_request', to: 'user_groups#approved'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  get 'games/new', to: 'games#new', as: 'games'
-  post 'games/new', to: 'games#create'
-  get 'games', to: 'games#index', as: 'games_list'
-  delete 'games/delete', to: 'games#delete', as: 'games_delete_instance'
+  # get 'games/new', to: 'games#new', as: 'games'
+  # post 'games/new', to: 'games#create'
+  # get 'games', to: 'games#index', as: 'games_list'
+  # delete 'games/:id/delete', to: 'games#delete', as: 'games_delete_instance'
+  # get 'games/:id/edit', to: 'games#edit', as: 'games_edit_instance'
+  # post 'games/:id/edit', to: 'games#update'
+  resources :games
 end

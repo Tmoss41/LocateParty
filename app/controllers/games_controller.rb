@@ -1,4 +1,5 @@
 class GamesController < ApplicationController
+
     def index
         @game = Game.all
     end
@@ -12,6 +13,14 @@ class GamesController < ApplicationController
     end
     def delete
         Game.find(params[:id]).destroy
+        redirect_to current_user
+    end
+    def edit
+        @game = Game.find(params[:id])
+        @group = current_user.groups
+    end
+    def update
+        Game.find(params[:id]).update(game_params)
         redirect_to current_user
     end
     private
