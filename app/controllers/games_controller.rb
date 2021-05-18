@@ -8,7 +8,7 @@ class GamesController < ApplicationController
     end
     def create
         @game  = Game.create(game_params)
-        redirect_to games_list_path
+        redirect_to current_user
     end
     private
     def game_params
