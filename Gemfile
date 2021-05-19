@@ -62,3 +62,9 @@ gem "rolify", "~> 6.0"
 gem "pundit", "~> 2.1"
 
 gem "groupify", "~> 0.9.0"
+
+gem "dotenv-rails", "~> 2.7"
+
+gem "cloudinary", "~> 1.20"
+
+gem "activestorage-cloudinary-service", "~> 0.2.3"

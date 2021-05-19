@@ -11,6 +11,7 @@ class User < ApplicationRecord
   has_many :approved_groups, through: :approved_usergroups, source: :group
   has_many :un_approved_usergroups, -> { un_approved }, class_name: 'UserGroup'
   has_many :un_approved_groups, through: :un_approved_usergroups, source: :group
+  has_one_attached :profile_image
   def full_name_to_csv
     return "#{self.first_name} #{self.last_name}"
   end

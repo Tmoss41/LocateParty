@@ -5,6 +5,8 @@
 <%= f.label :suburb %>
 <%= f.text_field :suburb %>
 <%= f.label :state %>
+
+<%= f.file_field :group_image %>
 <%= f.text_field :state %>
 <%= f.hidden_field :admin_name, value: current_user.full_name_to_csv %>
 <%= f.submit%>

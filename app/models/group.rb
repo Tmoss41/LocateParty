@@ -7,4 +7,5 @@ class Group < ApplicationRecord
   has_many :un_approved_usergroups, -> { un_approved }, class_name: 'UserGroup'
   has_many :un_approved_users, through: :un_approved_usergroups, source: :user
   validates :name, uniqueness: true
+  has_one_attached :group_image
 end
