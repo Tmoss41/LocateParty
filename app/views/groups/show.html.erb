@@ -5,16 +5,12 @@
 <%= @group.state %>
 <% @group.approved_users.each do |user| %>
     <%= user.email%>
-    <% if @admin == true && @group.admin_name == current_user.full_name_to_csv %>
+    <% if @groupadmin %>
         <%= link_to 'Delete', delete_member_path(group_id: @group.id, user_id: user.id), method: :delete %>
     <% end %>
 <% end %>
 <% case @group.users.where('email = ?', "#{current_user.email}").exists? %>
 <% when false %>
-    <%= form_with model: @params_pass do |f| %>
-        <% f.text_field :user_id, value: current_user.id %>
-        <% f.number_field :group_id, value: session[:current_group] %>
-        <%= f.submit 'Join' %>
-    <% end %>
+    <%= link_to 'Join',  user_groups_path(user_id: current_user.id, group_id: session[:current_group]), method: :post %>
 <% when true %>
 <% end %>

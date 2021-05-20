@@ -39,7 +39,7 @@
   <h1>Group Join Requests</h1>
   <p> You are an admin </p>
   <% current_user.groups.each do |group| %>
-    <% group.un_approved_users.each do |member| if current_user.full_name_to_csv == group.admin_name %>
+    <% group.un_approved_users.each do |member| if current_user.id == group.users.first.id %>
       <%= member.email %>
       <%= member.id%>
       <%= link_to 'Accept' , accept_request_path(user_id: member.id, group_id: group.id), method: :post %>
@@ -66,7 +66,7 @@
   <%= link_to 'New Group', new_group_path %>
   <% current_user.approved_groups.each do |group| %>
       <h3><%=link_to group.name, group_path(group) %></h3>
-      <% case current_user.has_role? :admin %>
+      <% case current_user.has_role? :admin and current_user.id == group.users.first.id %>
       <% when true %>
         <%= link_to 'Delete', delete_group_path(group), method: :delete %>
       <% end %>
@@ -90,7 +90,7 @@
       <h3><%= game.name %></h3>
       <p>Time of Game:<%= game.time %></p>
       <p>Date of Event: <%= game.date %></p>
-      <% if current_user.has_role? :admin and group.admin_name == current_user.full_name_to_csv %>
+      <% if current_user.has_role? :admin and group.users.first.id == current_user.id %>
       <%= link_to 'Delete' , game_path(game.id), method: :delete %>
       <%= link_to 'Edit' , edit_game_path(game) %>
       <% end %>

@@ -8,7 +8,7 @@ class GroupsController < ApplicationController
         @group = Group.find(params[:id])
         # Shows a specific group based on the id passed through from the webpage of the user
        session[:current_group] = params[:id]
-       @params_pass = UserGroup.new
+       @groupadmin = @admin && @group.users.first.id == current_user.id
        
     end
     def new
@@ -38,6 +38,7 @@ class GroupsController < ApplicationController
     def delete_member
         render json: params
     end
+    
     private
     def group_params
         # Permits different parameters to be allowed into database queries for methods relating to the Groups Model, 
