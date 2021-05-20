@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   post 'join', to: 'user_groups#join', as: 'user_groups'
   post 'accepted_request', to: 'user_groups#approved', as: 'accept_request'
   patch 'accepted_request', to: 'user_groups#approved'
+  delete 'groups/:id/delete_member', to: 'user_groups#destroy_member_in_group', as: 'delete_member'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   resources :games
 end

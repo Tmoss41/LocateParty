@@ -42,11 +42,7 @@
     <% group.un_approved_users.each do |member| if current_user.full_name_to_csv == group.admin_name %>
       <%= member.email %>
       <%= member.id%>
-      <%= form_with model: @groups , url: accept_request_path, method: :post do |f| %>
-        <%= f.hidden_field :user_id, value: member.id %>
-        <%= f.hidden_field :group_id, value: group.id%> 
-        <%= f.submit 'Accept'%>
-        <% end %>
+      <%= link_to 'Accept' , accept_request_path(user_id: member.id, group_id: group.id), method: :post %>
       <% end %>
     <% end %>
   <% end %>
@@ -62,27 +58,22 @@
 <div>
   <%= form_with url: find_path, method: :post do |f| %>
     <%= f.text_field :name %>
+    <%= f.text_field :suburb %>
+    <%= f.text_field :state %>
     <%= f.submit 'Find a Group' %>
   <% end %>
   <h1> My Groups</h1>
-  <% case  current_user.has_role? :admin %>
-  <% when true%>
-    <%= link_to 'New Group', new_group_path %>
-    <% current_user.approved_groups.each do |group| %>
-      <h3><%= group.name %></h3>
-    <%= link_to 'Delete', delete_group_path(group), method: :delete %>
+  <%= link_to 'New Group', new_group_path %>
+  <% current_user.approved_groups.each do |group| %>
+      <h3><%=link_to group.name, group_path(group) %></h3>
+      <% case current_user.has_role? :admin %>
+      <% when true %>
+        <%= link_to 'Delete', delete_group_path(group), method: :delete %>
+      <% end %>
       <% group.users.each do |user| %>
         <p><%= user.full_name_to_csv%></p>
         <% end %>
     <% end %>
-  <% when false %>
-    <% current_user.approved_groups.each do |group| %>
-      <h3><%= group.name %></h3>
-      <% group.users.each do |user| %>
-        <p><%= user.full_name_to_csv%></p>
-        <% end %>
-    <% end %>
-  <% end %>
   <%# Authorizing Function, if User is an admin they will be able to create new groups %>
   
 
@@ -99,7 +90,7 @@
       <h3><%= game.name %></h3>
       <p>Time of Game:<%= game.time %></p>
       <p>Date of Event: <%= game.date %></p>
-      <% if current_user.has_role? :admin %>
+      <% if current_user.has_role? :admin and group.admin_name == current_user.full_name_to_csv %>
       <%= link_to 'Delete' , game_path(game.id), method: :delete %>
       <%= link_to 'Edit' , edit_game_path(game) %>
       <% end %>
