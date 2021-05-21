@@ -38,6 +38,11 @@ class GroupsController < ApplicationController
     def edit
         @group = Group.find(params[:id])
     end
+    def destroy_image
+        @image = Group.find(params[:id]).group_images.find(params[:image_id])
+        @image.purge
+        redirect_to group_path(params[:id])
+    end
     private
     def group_params
         # Permits different parameters to be allowed into database queries for methods relating to the Groups Model, 

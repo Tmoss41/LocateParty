@@ -14,6 +14,7 @@
 <% if current_user.profile_image.attached? == true %>
 <%= cl_image_tag current_user.profile_image.key, crop: :scale, width: 100, cloud_name: 'tmoss41' %>
 <% end %>
+<%= link_to 'Edit Details', edit_user_registration_path %>
 <article>
 <%# Character List Card %>
 <div> 

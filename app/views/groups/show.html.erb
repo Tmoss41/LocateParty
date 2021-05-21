@@ -3,6 +3,7 @@
 <% if @group.group_images.attached? %>
     <% @group.group_images.each do |image| %>
         <%= cl_image_tag image.key %>
+        <%= link_to 'Delete' , delete_image_path(image_id: image.id), method: :delete %>
     <% end %>
 <% end %>
 
