@@ -62,8 +62,7 @@
 <%# Game List Card %>
 
 <div>
-  <h1> Games</h1>
-    <%= link_to 'New Game', new_game_path if current_user.has_role? :admin %>
+  <h1>My Games</h1>
   <% current_user.approved_groups.each do |group| %>
     <h2><%= group.name %></h2>
     <% group.games.each do |game| %>  

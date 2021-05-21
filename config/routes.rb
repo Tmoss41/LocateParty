@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   get 'group/:id' , to: 'groups#show', as: 'group'
   delete 'group/:id', to: 'groups#delete', as: 'delete_group'
   get 'group/:id/edit' , to: 'groups#edit', as: 'edit_group'
+  patch 'group/:id', to: 'groups#update'
   # Routes Relating to UserGroup Functionality, such as adding a new member to a group
   post 'join', to: 'user_groups#join', as: 'user_groups'
   post 'accepted_request', to: 'user_groups#approved', as: 'accept_request'

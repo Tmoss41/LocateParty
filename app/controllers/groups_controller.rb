@@ -1,13 +1,8 @@
 class GroupsController < ApplicationController
     before_action :admin?, only: :show
-    def index
-        # Checks the database for all groups assigned to the current user 
-        @groups = current_user.groups
-    end
     def show
         @group = Group.find(params[:id])
-        # Shows a specific group based on the id passed through from the webpage of the user
-       session[:current_group] = params[:id]
+        # Shows a specific group based on the id passed through from the webpage of the user=
        
        
     end
@@ -35,14 +30,18 @@ class GroupsController < ApplicationController
         Group.find(params[:id]).destroy
         redirect_to current_user
     end
-    def delete_member
-        render json: params
+    def update
+        @group = Group.find(params[:id])
+        @group.update(group_params)
+        redirect_to @group
     end
-    
+    def edit
+        @group = Group.find(params[:id])
+    end
     private
     def group_params
         # Permits different parameters to be allowed into database queries for methods relating to the Groups Model, 
-        params.require(:group).permit(:name, :suburb, :state, :admin_name)
+        params.require(:group).permit(:name, :suburb, :state, :admin_name, :group_images)
     end
     def admin?
         @admin =  UserGroup.where('user_id = ? and group_id = ?', current_user.id, params[:id])
