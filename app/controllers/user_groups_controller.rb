@@ -1,25 +1,36 @@
 class UserGroupsController < ApplicationController
-  before_action :set_group_id, only: [:join]
-  before_action :set_group_and_user_params, only: [:approved]
+  before_action :set_group_and_user_params, only: [:approved, :join]
   def join
     # Creates a new entry under UserGroup model, using the current_user's database id and a pre-configured session entry
-      @query = UserGroup.create(user_id: current_user.id, group_id: @group, approved: false)
+      @query = UserGroup.create(set_group_and_user_params)
       redirect_to current_user
   end
+  # The Approved action, allows a user that requested to join a group to be allowed to see the group details
   def approved
-    UserGroup.where(['user_id = ? and group_id = ?' , params[:user_group][:user_id], params[:user_group][:group_id]]).update(approved: true)
+    UserGroup.where(['user_id = ? and group_id = ?' , params[:user_id], params[:group_id]]).update(approved: true)
     redirect_to current_user
     # render json: params
   end
+  # This action is used in two scenarios. It is used to remove entries from the UserGRoup Join Table, 
+  # i.e either a user that is already a part of a group, where they will then be removed from the group
+   # or a request to join a group which has been rejected will then be removed. 
+  def destroy_member_in_group
+    @user = UserGroup.where(['user_id = ? and group_id = ?' , params[:user_id], params[:group_id]])
+    @user.destroy_all
+    if @user.approved == true
+      redirect_to group_path(params[:group_id])
+    else 
+      redirect_to current_user
+    end
+  end
   private 
-  def set_group_id
-    # sets the session to a variable
-    @group = session[:current_group]
-  end
-  def set_group_and_user_params
-    params.require(:user_group).permit(:user_id, :group_id)
-  end
   def show
     @usergroup = UserGroup.where("group_id = #{params[:id]}")
   end
+  
+  private 
+  def set_group_and_user_params
+    params.permit(:group_id, :user_id, :approved)
+  end
+  
 end

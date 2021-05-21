@@ -14,12 +14,13 @@
 <% if current_user.profile_image.attached? == true %>
 <%= cl_image_tag current_user.profile_image.key, crop: :scale, width: 100, cloud_name: 'tmoss41' %>
 <% end %>
+<%= link_to 'Edit Details', edit_user_registration_path %>
 <article>
 <%# Character List Card %>
 <div> 
   <h1>My Characters </h1>
   <%= link_to 'New Character' , new_character_path %>
-  <% @user.characters.each do |character| %>
+  <% current_user.characters.each do |character| %>
     <h2><%= link_to character.name, character %></h2>
     <p><%= character.race %></p> 
     <p><%= character.alignment %></p>
@@ -33,26 +34,6 @@
 <%# <% @user.approved_groups.each do |group| %>
 <%# <p><%= group.name %></p>
 <%# <% end %>
-<% case current_user.has_role? :admin %>
-<% when true %>
-<div>
-  <h1>Group Join Requests</h1>
-  <p> You are an admin </p>
-  <% current_user.groups.each do |group| %>
-    <% group.un_approved_users.each do |member| if current_user.full_name_to_csv == group.admin_name %>
-      <%= member.email %>
-      <%= member.id%>
-      <%= form_with model: @groups , url: accept_request_path, method: :post do |f| %>
-        <%= f.hidden_field :user_id, value: member.id %>
-        <%= f.hidden_field :group_id, value: group.id%> 
-        <%= f.submit 'Accept'%>
-        <% end %>
-      <% end %>
-    <% end %>
-  <% end %>
-</div>
-<% when false %>
-<% end %>
 
 
 <%# Group List Card %>
@@ -61,28 +42,19 @@
   
 <div>
   <%= form_with url: find_path, method: :post do |f| %>
-    <%= f.text_field :name %>
-    <%= f.submit 'Find a Group' %>
+    <p><%= f.text_field :name %></p>
+    <p><%= f.text_field :suburb %></p>
+    <p><%= f.text_field :state %></p>
+    <p><%= f.submit 'Find a Group' %></p>
   <% end %>
   <h1> My Groups</h1>
-  <% case  current_user.has_role? :admin %>
-  <% when true%>
-    <%= link_to 'New Group', new_group_path %>
-    <% current_user.approved_groups.each do |group| %>
-      <h3><%= group.name %></h3>
-    <%= link_to 'Delete', delete_group_path(group), method: :delete %>
+  <%= link_to 'New Group', new_group_path %>
+  <% current_user.approved_groups.each do |group| %>
+      <h3><%=link_to group.name, group_path(group) %></h3>
       <% group.users.each do |user| %>
         <p><%= user.full_name_to_csv%></p>
         <% end %>
     <% end %>
-  <% when false %>
-    <% current_user.approved_groups.each do |group| %>
-      <h3><%= group.name %></h3>
-      <% group.users.each do |user| %>
-        <p><%= user.full_name_to_csv%></p>
-        <% end %>
-    <% end %>
-  <% end %>
   <%# Authorizing Function, if User is an admin they will be able to create new groups %>
   
 
@@ -91,18 +63,13 @@
 <%# Game List Card %>
 
 <div>
-  <h1> Games</h1>
-    <%= link_to 'New Game', new_game_path if current_user.has_role? :admin %>
+  <h1>My Games</h1>
   <% current_user.approved_groups.each do |group| %>
     <h2><%= group.name %></h2>
     <% group.games.each do |game| %>  
       <h3><%= game.name %></h3>
       <p>Time of Game:<%= game.time %></p>
       <p>Date of Event: <%= game.date %></p>
-      <% if current_user.has_role? :admin %>
-      <%= link_to 'Delete' , game_path(game.id), method: :delete %>
-      <%= link_to 'Edit' , edit_game_path(game) %>
-      <% end %>
     <% end %>
   <% end %>
 </div>
