@@ -12,8 +12,13 @@ class UserGroupsController < ApplicationController
     # render json: params
   end
   def destroy_member_in_group
-    UserGroup.where(['user_id = ? and group_id = ?' , params[:user_id], params[:group_id]]).destroy_all
-    redirect_to group_path(params[:group_id])
+    @user = UserGroup.where(['user_id = ? and group_id = ?' , params[:user_id], params[:group_id]])
+    @user.destroy_all
+    if @user.approved == true
+      redirect_to group_path(params[:group_id])
+    else 
+      redirect_to current_user
+    end
   end
   private 
   def set_group_id

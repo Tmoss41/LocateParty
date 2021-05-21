@@ -1,4 +1,5 @@
 class UserGroup < ApplicationRecord
+  rolify :role_cname => 'GameRole'
   belongs_to :user
   belongs_to :group
   #  Ensures that the database queries to add users to specific groups cannot be repeated for the same user and group combination

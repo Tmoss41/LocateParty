@@ -1,16 +1,43 @@
 <h1><%= @group.name%></h1>
 
-<h2>Members</h2>
+<h2>Current Members</h2><%= link_to 'Delete Group', group_path, method: :delete if @is_admin%>
 <%= @group.suburb %>
 <%= @group.state %>
 <% @group.approved_users.each do |user| %>
     <%= user.email%>
-    <% if @groupadmin %>
-        <%= link_to 'Delete', delete_member_path(group_id: @group.id, user_id: user.id), method: :delete %>
-    <% end %>
+    <%= link_to 'Delete', delete_member_path(group_id: @group.id, user_id: user.id), method: :delete if @is_admin %>
 <% end %>
 <% case @group.users.where('email = ?', "#{current_user.email}").exists? %>
 <% when false %>
     <%= link_to 'Join',  user_groups_path(user_id: current_user.id, group_id: session[:current_group]), method: :post %>
 <% when true %>
 <% end %>
+
+
+<h1> Pending Requests</h1> 
+<div>
+  <h1>Group Join Requests</h1>
+  <p> You are an admin </p>
+  <% current_user.groups.each do |group| %>
+    <% group.un_approved_users.each do |member| if @admin %>
+      <%= member.email %>
+      <%= member.id%>
+      <%= link_to 'Accept' , accept_request_path(user_id: member.id, group_id: group.id), method: :post %>
+      <%= link_to 'Delete', delete_member_path(group_id: group.id, user_id: member.id), method: :delete %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
+
+<div>
+  <h1> Games</h1>
+  <%= @admin.first.has_role? :group_admin %>
+    <%= link_to 'New Game', new_game_path if @is_admin %>
+  <% @group.games.each do |game| %>
+    <h3><%= game.name %></h3>
+    <p>Time of Game:<%= game.time %></p>
+    <p>Date of Event: <%= game.date %></p>
+        <%= link_to 'Delete' , game_path(game.id), method: :delete if @is_admin %>
+        <%= link_to 'Edit' , edit_game_path(game) if @is_admin %>
+  <% end %>
+</div>

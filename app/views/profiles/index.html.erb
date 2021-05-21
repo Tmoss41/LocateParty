@@ -19,7 +19,7 @@
 <div> 
   <h1>My Characters </h1>
   <%= link_to 'New Character' , new_character_path %>
-  <% @user.characters.each do |character| %>
+  <% current_user.characters.each do |character| %>
     <h2><%= link_to character.name, character %></h2>
     <p><%= character.race %></p> 
     <p><%= character.alignment %></p>
@@ -33,22 +33,6 @@
 <%# <% @user.approved_groups.each do |group| %>
 <%# <p><%= group.name %></p>
 <%# <% end %>
-<% case current_user.has_role? :admin %>
-<% when true %>
-<div>
-  <h1>Group Join Requests</h1>
-  <p> You are an admin </p>
-  <% current_user.groups.each do |group| %>
-    <% group.un_approved_users.each do |member| if current_user.id == group.users.first.id %>
-      <%= member.email %>
-      <%= member.id%>
-      <%= link_to 'Accept' , accept_request_path(user_id: member.id, group_id: group.id), method: :post %>
-      <% end %>
-    <% end %>
-  <% end %>
-</div>
-<% when false %>
-<% end %>
 
 
 <%# Group List Card %>
@@ -57,19 +41,15 @@
   
 <div>
   <%= form_with url: find_path, method: :post do |f| %>
-    <%= f.text_field :name %>
-    <%= f.text_field :suburb %>
-    <%= f.text_field :state %>
-    <%= f.submit 'Find a Group' %>
+    <p><%= f.text_field :name %></p>
+    <p><%= f.text_field :suburb %></p>
+    <p><%= f.text_field :state %></p>
+    <p><%= f.submit 'Find a Group' %></p>
   <% end %>
   <h1> My Groups</h1>
   <%= link_to 'New Group', new_group_path %>
   <% current_user.approved_groups.each do |group| %>
       <h3><%=link_to group.name, group_path(group) %></h3>
-      <% case current_user.has_role? :admin and current_user.id == group.users.first.id %>
-      <% when true %>
-        <%= link_to 'Delete', delete_group_path(group), method: :delete %>
-      <% end %>
       <% group.users.each do |user| %>
         <p><%= user.full_name_to_csv%></p>
         <% end %>
@@ -90,10 +70,6 @@
       <h3><%= game.name %></h3>
       <p>Time of Game:<%= game.time %></p>
       <p>Date of Event: <%= game.date %></p>
-      <% if current_user.has_role? :admin and group.users.first.id == current_user.id %>
-      <%= link_to 'Delete' , game_path(game.id), method: :delete %>
-      <%= link_to 'Edit' , edit_game_path(game) %>
-      <% end %>
     <% end %>
   <% end %>
 </div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_20_105955) do
+ActiveRecord::Schema.define(version: 2021_05_21_032733) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,6 +55,16 @@ ActiveRecord::Schema.define(version: 2021_05_20_105955) do
     t.index ["user_id"], name: "index_characters_on_user_id"
   end
 
+  create_table "game_roles", force: :cascade do |t|
+    t.string "name"
+    t.string "resource_type"
+    t.bigint "resource_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name", "resource_type", "resource_id"], name: "index_game_roles_on_name_and_resource_type_and_resource_id"
+    t.index ["resource_type", "resource_id"], name: "index_game_roles_on_resource"
+  end
+
   create_table "games", force: :cascade do |t|
     t.string "name"
     t.date "date"
@@ -91,6 +101,14 @@ ActiveRecord::Schema.define(version: 2021_05_20_105955) do
     t.boolean "approved", default: true
     t.index ["group_id"], name: "index_user_groups_on_group_id"
     t.index ["user_id"], name: "index_user_groups_on_user_id"
+  end
+
+  create_table "user_groups_game_roles", id: false, force: :cascade do |t|
+    t.bigint "user_group_id"
+    t.bigint "game_role_id"
+    t.index ["game_role_id"], name: "index_user_groups_game_roles_on_game_role_id"
+    t.index ["user_group_id", "game_role_id"], name: "index_user_groups_game_roles_on_user_group_id_and_game_role_id"
+    t.index ["user_group_id"], name: "index_user_groups_game_roles_on_user_group_id"
   end
 
   create_table "users", force: :cascade do |t|
