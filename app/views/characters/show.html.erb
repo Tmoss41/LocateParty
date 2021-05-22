@@ -1,7 +1,7 @@
-<h1></h1>
-
-<%= @character.name %>
-<%= @character.race%>
-<%= @character.level %>
-<%= @character.alignment %>
-<%= @character.character_class %>
+<article class="show">
+    <h1><%= @character.name %></h1>
+    <p>Race: <%= @character.race%></p>
+    <p>Level: <%= @character.level %></p>
+    <p> Alignment: <%= @character.alignment %></p>
+    <p> Class: <%= @character.character_class %></p>
+</article>
