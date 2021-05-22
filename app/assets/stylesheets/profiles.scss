@@ -1,3 +1,37 @@
 // Place all the styles related to the profiles controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+.show_profile_page{
+  display: flex;
+  flex-wrap: wrap;
+  div{
+      border: 2px solid black;
+  }
+}
+.profile_card{
+    background-color: pink;
+    width: 50%; 
+}
+.character_card{
+    background-color: lightblue;
+    width: 100%; 
+    section{
+        display: flex;
+        flex-wrap: wrap;
+        div{
+            width: 25%;
+            border: none;
+        }
+    }
+}
+.group_card{
+    background-color: lightcoral;
+    width: 50%; 
+}
+.game_card{
+    background-color: lightgray;
+    width: 50%; 
+}
+.invite_card{
+    width: 50%;
+}

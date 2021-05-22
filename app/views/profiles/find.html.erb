@@ -1,0 +1,7 @@
+<div> 
+    <% @profiles.each do |profile| %>
+        <p>Name: <%= link_to profile.full_name_to_csv, profile_path(profile.user) %></p>
+        <p>Suburb: <%= profile.suburb %></p>
+        <%= link_to 'Invite',  user_groups_path(user_id: profile.user.id, group_id: params[:id], player_approval: false, approved: true), method: :post %>
+    <% end %>
+</div>

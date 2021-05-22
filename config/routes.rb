@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   # Routes Relating to User Model and Signup Functions
   devise_for :users, controllers: { sessions: 'users/sessions', registrations: 'users/registrations' }
-  get 'user/:id', to: 'profiles#index', as: 'user'
+  get 'user/:id', to: 'profiles#show', as: 'user'
   # Root Page
   root to: 'home#index'
   # Routes Relating to the Characters CRUD Functionality
@@ -9,7 +9,8 @@ Rails.application.routes.draw do
   get 'user/:id/characters/new', to: 'characters#new', as: 'user_new_character'
   get 'user/:id/characters/edit', to: 'characters#edit', as: 'user_edit_character'
   delete 'user/:id/characters/delete', to: 'characters#delete', as: 'user_delete_character'
-
+  post 'group/:id/find_user', to: 'profiles#find', as: 'find_profile'
+  post 'group/:id/assign_admin', to: 'groups#make_admin', as: 'assign_admin'
   # Routes Relating to the Group CRUD Functionality
   get 'groups', to: 'groups#index'
   post 'groups', to: 'groups#create'
@@ -23,9 +24,11 @@ Rails.application.routes.draw do
   delete 'group/:id/delete_image', to: 'groups#destroy_image', as: 'delete_image'
   # Routes Relating to UserGroup Functionality, such as adding a new member to a group
   post 'join', to: 'user_groups#join', as: 'user_groups'
+  post 'accept', to: 'user_groups#accept_invite', as: 'accept_invite'
+  patch 'accept', to: 'user_groups#accept_invite'
   post 'accepted_request', to: 'user_groups#approved', as: 'accept_request'
   patch 'accepted_request', to: 'user_groups#approved'
   delete 'group/:id/delete_member', to: 'user_groups#destroy_member_in_group', as: 'delete_member'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  resources :games
+  resources :games, :profiles
 end
