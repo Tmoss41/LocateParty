@@ -11,8 +11,8 @@
 <p>Suburb: <%= @group.suburb %></p>
 <p>State: <%= @group.state %></p>
 <% @group.approved_users.each do |user| %>
-    <%= user.profile.full_name_to_csv%>
-    <button><%= link_to 'Delete', delete_member_path(group_id: @group.id, user_id: user.id), method: :delete if @is_admin %></button>
+    <p><%= user.profile.full_name_to_csv%></p>
+    <p><%= link_to 'Delete', delete_member_path(group_id: @group.id, user_id: user.id), method: :delete if @is_admin %></p>
 <% end %>
 <% if @is_admin %>
     <%= form_with url: find_profile_path(id: @group.id) do |f| %>
