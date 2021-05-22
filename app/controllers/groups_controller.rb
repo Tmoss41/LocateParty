@@ -3,8 +3,11 @@ class GroupsController < ApplicationController
     def show
         @group = Group.find(params[:id])
         # Shows a specific group based on the id passed through from the webpage of the user=
-       
-       
+    end
+    def make_admin
+        @usergroup = UserGroup.where(user_id: params[:user_id], group_id: params[:group_id]).first
+        @usergroup.add_role :group_admin
+        redirect_to group_path(params[:group_id])
     end
     def new
         # Saves a place in memory for a new  instance of a group and then redirects user to the new.html.erb page found in /views/groups

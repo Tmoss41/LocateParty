@@ -13,6 +13,7 @@
 <% @group.approved_users.each do |user| %>
     <p><%= user.profile.full_name_to_csv%></p>
     <p><%= link_to 'Delete', delete_member_path(group_id: @group.id, user_id: user.id), method: :delete if @is_admin %></p>
+    <p><%= link_to 'Make Admin', assign_admin_path(group_id: @group.id, user_id: user.id), method: :post, remote: true if !user.user_groups.where(user_id: user.id, group_id: @group.id).first.has_role? :group_admin %></p>
 <% end %>
 <% if @is_admin %>
     <%= form_with url: find_profile_path(id: @group.id) do |f| %>

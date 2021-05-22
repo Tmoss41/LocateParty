@@ -3,8 +3,8 @@ class UserGroupsController < ApplicationController
   def join
     # Creates a new entry under UserGroup model, using the current_user's database id and a pre-configured session entry
       @query = UserGroup.create(set_group_and_user_params)
-      render plain: @query.errors.full_messages
-      # redirect_to current_user
+      # render plain: @query.errors.full_messages
+      redirect_to current_user
   end
   # The Approved action, allows a user that requested to join a group to be allowed to see the group details
   def approved
