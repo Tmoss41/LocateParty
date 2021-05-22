@@ -14,7 +14,7 @@ class GroupsController < ApplicationController
         # Takes data from the form on the new.html.erb page and creates a add query to the database using the parameters defined in private method, from webpage
         @group = current_user.groups.new(group_params)
         if @group.save
-            @usergroup = UserGroup.create(user_id: current_user.id, group_id: @group.id, approved: true)
+            @usergroup = UserGroup.create(user_id: current_user.id, group_id: @group.id, approved: true, player_approval: true)
             @usergroup.add_role :group_admin
             redirect_to current_user
         else

@@ -1,0 +1,18 @@
+<%= form_with model: @profile do |f| %>
+<p><%= f.label :first_name%>: <%= f.text_field :first_name %></p>
+
+<%= f.label :last_name %>
+<%= f.text_field :last_name %>
+<br>
+<%= f.label :bio %>
+<%= f.text_field :bio %>
+<br>
+<%= f.label :mobile %>
+<%= f.text_field :mobile %>
+<br>
+<%= f.label :suburb %>
+<%= f.text_field :suburb %>
+<%= f.hidden_field :user_id, value: current_user.id %>
+<%= f.submit %>
+<% end %>
+<%= current_user.id %>

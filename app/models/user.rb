@@ -11,8 +11,11 @@ class User < ApplicationRecord
   has_many :approved_groups, through: :approved_usergroups, source: :group
   has_many :un_approved_usergroups, -> { un_approved }, class_name: 'UserGroup'
   has_many :un_approved_groups, through: :un_approved_usergroups, source: :group
+  has_many :join_pending_usergroups, -> { join_pending }, class_name: 'UserGroup'
+  has_many :join_pending_groups, through: :join_pending_usergroups, source: :group
+  has_many :invite_pending_usergroups, -> { invite_pending }, class_name: 'UserGroup'
+  has_many :invite_pending_groups, through: :invite_pending_usergroups, source: :group
   has_one_attached :profile_image
-  def full_name_to_csv
-    return "#{self.first_name} #{self.last_name}"
-  end
+  has_one :profile, dependent: :destroy
+  
 end

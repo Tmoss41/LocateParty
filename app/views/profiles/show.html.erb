@@ -10,17 +10,31 @@
     padding: 10px;
   }
 </style>
-<%= current_user.email %>
-<% if current_user.profile_image.attached? == true %>
-<%= cl_image_tag current_user.profile_image.key, crop: :scale, width: 100, cloud_name: 'tmoss41' %>
-<% end %>
-<%= link_to 'Edit Details', edit_user_registration_path %>
+<%= @user.email %>
+
 <article>
+<div>
+  <% if @user.profile_image.attached? == true %>
+    <%= cl_image_tag current_user.profile_image.key, crop: :scale, width: 100, cloud_name: 'tmoss41' %>
+  <% end %>
+  <% case @user.profile.present? %>
+  <% when false %>
+    <%= link_to 'Create Profile', new_profile_path if @owner  %>
+  <% else %>
+    <%= link_to 'Modify Profle', edit_profile_path(current_user.profile) if @owner %>
+    <p><%= @profile.first_name %></p>
+  <p><%= @profile.last_name %></p>
+  <p><%= @profile.bio %></p>
+  <p><%= @profile.mobile %></p>
+  <p><%= @profile.suburb %>
+  <% end %>
+  
+</div>
 <%# Character List Card %>
 <div> 
   <h1>My Characters </h1>
-  <%= link_to 'New Character' , new_character_path %>
-  <% current_user.characters.each do |character| %>
+  <%= link_to 'New Character' , new_character_path if @owner%>
+  <% @user.characters.each do |character| %>
     <h2><%= link_to character.name, character %></h2>
     <p><%= character.race %></p> 
     <p><%= character.alignment %></p>
@@ -48,11 +62,11 @@
     <p><%= f.submit 'Find a Group' %></p>
   <% end %>
   <h1> My Groups</h1>
-  <%= link_to 'New Group', new_group_path %>
-  <% current_user.approved_groups.each do |group| %>
+  <%= link_to 'New Group', new_group_path if @owner%>
+  <% @user.approved_groups.each do |group| %>
       <h3><%=link_to group.name, group_path(group) %></h3>
       <% group.users.each do |user| %>
-        <p><%= user.full_name_to_csv%></p>
+        <p><%= user.profile.full_name_to_csv %></p>
         <% end %>
     <% end %>
   <%# Authorizing Function, if User is an admin they will be able to create new groups %>
@@ -64,7 +78,7 @@
 
 <div>
   <h1>My Games</h1>
-  <% current_user.approved_groups.each do |group| %>
+  <% @user.approved_groups.each do |group| %>
     <h2><%= group.name %></h2>
     <% group.games.each do |game| %>  
       <h3><%= game.name %></h3>
@@ -73,5 +87,13 @@
     <% end %>
   <% end %>
 </div>
+<% case @owner %>
+<% when true%>
+  <h1> My Invites </h1>
+  <% @user.invite_pending_groups.each do |group| %>
+    <%= group.name %>
+    <%= link_to 'Accept', accept_invite_path(user_id: @user.id, group_id: group.id), method: :post %>
+  <% end %>
+<% end %>
 
 </article>
