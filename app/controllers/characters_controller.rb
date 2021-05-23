@@ -1,30 +1,41 @@
 class CharactersController < ApplicationController
+    before_action :set_character, only: [:edit, :show, :update]
     def new 
         @character = Character.new
+        authorize @character
     end
     def create
-        @character = current_user.characters.create(character_params)
-        redirect_to current_user
+        @character = current_user.characters.new(character_params)
+        authorize @character
+        if @character.save
+            redirect_to current_user
+        else 
+            flash.alert = @character.errors.full_messages
+            redirect_to new_character_path
+        end
     end
     def show
-        @character = current_user.characters.find(params[:id])
     end
     def edit
-        @character = current_user.characters.find(params[:id])
     end
     def update
-        @character = current_user.characters.find(params[:id])
-        @character.update(character_params)
-        redirect_to current_user
+        authorize @character
+        if @character.update(character_params)
+            redirect_to current_user
+        else 
+            flash.alert = @character.errors.full_messages
+            redirect_to edit_character_path(@character)
+        end
     end
     def delete
         Character.find(params[:id]).destroy
         redirect_to current_user
     end
     private
-
     def character_params
         params.require(:character).permit(:name, :level, :alignment, :race, :character_class)
     end
-
+    def set_character
+        @character = current_user.characters.find(params[:id])
+    end
 end

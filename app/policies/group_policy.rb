@@ -17,6 +17,12 @@ class GroupPolicy
     def delete?
         authorize_admin
     end
+    def new?
+        signed_in?
+    end
+    def create? 
+        signed_in?
+    end
     private 
     def admin?(user, group)
         @admin = user.user_groups.where(user_id: user.id, group_id: group.id).first
@@ -38,6 +44,14 @@ class GroupPolicy
             return true
         when false
             raise Pundit::NotAuthorizedError
+        end
+    end
+    def signed_in?
+        case @user.class != NilClass
+        when true
+            return true
+        when false
+            return false
         end
     end
 end
