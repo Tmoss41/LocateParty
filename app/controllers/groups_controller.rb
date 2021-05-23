@@ -1,5 +1,7 @@
 class GroupsController < ApplicationController
     before_action :admin?, only: :show
+    before_action :set_group, only: [:edit, :show, :delete, :update]
+    before_action :authorize_group, only: [:edit, :delete, :update]
     def show
         @group = Group.find(params[:id])
         # Shows a specific group based on the id passed through from the webpage of the user=
@@ -30,17 +32,14 @@ class GroupsController < ApplicationController
         @groups = Group.where("name LIKE ? AND suburb like ? AND state like ?", "%#{params[:name]}%", "%#{params[:suburb]}%", "%#{params[:state]}%")
     end
     def delete
-        Group.find(params[:id]).destroy
+        @group.destroy
         redirect_to current_user
     end
     def update
-        @group = Group.find(params[:id])
-        authorize @group
         @group.update(group_params)
         redirect_to @group
     end
     def edit
-        @group = Group.find(params[:id])
     end
     def destroy_image
         @image = Group.find(params[:id]).group_images.find(params[:image_id])
@@ -55,5 +54,11 @@ class GroupsController < ApplicationController
     def admin?
         @admin =  UserGroup.where('user_id = ? and group_id = ?', current_user.id, params[:id])
         return @is_admin = (@admin.first.has_role? :group_admin) if @admin.exists?
+    end
+    def set_group
+        @group = Group.find(params[:id])
+    end
+    def authorize_group
+        authorize @group
     end
 end

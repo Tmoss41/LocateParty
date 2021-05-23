@@ -8,16 +8,35 @@ class GroupPolicy
         @user_check = @user.usergroups.where(user_id: @user.id, group_id: @group.id).first
         return @user_check.has_role? :group_admin
     end
+    def edit? 
+        authorize_admin
+    end
     def update?
-        @admin = @user.user_groups.where(user_id: @user.id, group_id: @group.id).first
+        authorize_admin
+    end
+    def delete?
+        authorize_admin
+    end
+    private 
+    def admin?(user, group)
+        @admin = user.user_groups.where(user_id: user.id, group_id: group.id).first
         if @admin.class != NilClass
             case @admin.has_role? :group_admin
             when true
                 return true
             else
-                raise Pundit::NotAuthorizedError
+                return false
             end
         else 
+            return false
+        end
+    end
+    def authorize_admin
+        role = admin?(@user, @group)
+        case role
+        when true 
+            return true
+        when false
             raise Pundit::NotAuthorizedError
         end
     end
