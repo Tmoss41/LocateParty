@@ -9,10 +9,9 @@ Rails.application.routes.draw do
   get 'user/:id/characters/new', to: 'characters#new', as: 'user_new_character'
   get 'user/:id/characters/edit', to: 'characters#edit', as: 'user_edit_character'
   delete 'user/:id/characters/delete', to: 'characters#delete', as: 'user_delete_character'
-  post 'group/:id/find_user', to: 'profiles#find', as: 'find_profile'
+  get 'group/:id/find_user', to: 'profiles#find', as: 'find_profile'
   post 'group/:id/assign_admin', to: 'groups#make_admin', as: 'assign_admin'
   # Routes Relating to the Group CRUD Functionality
-  get 'groups', to: 'groups#index'
   post 'groups', to: 'groups#create'
   post 'groups/find' , to: 'groups#find', as: 'find'
   # post 'join', to: 'user_groups#join', as: 'join'

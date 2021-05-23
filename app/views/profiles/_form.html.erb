@@ -13,6 +13,6 @@
 <%= f.label :suburb %>
 <%= f.text_field :suburb %>
 <%= f.hidden_field :user_id, value: current_user.id %>
+<%= f.file_field :avatar %>
 <%= f.submit %>
 <% end %>
-<%= current_user.id %>
