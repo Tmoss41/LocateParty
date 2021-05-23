@@ -14,6 +14,8 @@ User.destroy_all
 Group.destroy_all
 Character.destroy_all
 
+
+
 # User.all.each do |user|
 #     user.groups.create(name: group_sample_names.sample, suburb: group_sample_suburbs.sample , state: 'QLD' )
 #     user.characters.create(name: character_sample_names.sample, race: 'Elf', character_class: 'Bard', alignment: 'Neutral', level: 1)

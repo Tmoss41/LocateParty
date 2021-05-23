@@ -35,6 +35,7 @@ class GroupsController < ApplicationController
     end
     def update
         @group = Group.find(params[:id])
+        authorize @group
         @group.update(group_params)
         redirect_to @group
     end

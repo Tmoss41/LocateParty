@@ -25,9 +25,10 @@ class ProfilesController < ApplicationController
     end
     def find
         @profiles = Profile.where("first_name LIKE ? AND last_name like ? AND suburb like ?", "%#{params[:first_name]}%", "%#{params[:last_name]}%", "%#{params[:suburb]}%")
+        
     end
     private
     def profile_params
-        params.require(:profile).permit(:first_name, :last_name, :bio, :user_id, :mobile, :suburb)
+        params.require(:profile).permit(:first_name, :last_name, :bio, :user_id, :mobile, :suburb, :avatar)
     end
 end
