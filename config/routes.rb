@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'locations/find'
   # Routes Relating to User Model and Signup Functions
   devise_for :users, controllers: { sessions: 'users/sessions', registrations: 'users/registrations' }
   get 'user/:id', to: 'profiles#show', as: 'user'
@@ -28,5 +29,6 @@ Rails.application.routes.draw do
   patch 'accepted_request', to: 'user_groups#approved'
   delete 'group/:id/delete_member', to: 'user_groups#destroy_member_in_group', as: 'delete_member'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  get 'search', to: 'locations#find', as: 'nav_search'
   resources :games, :profiles
 end

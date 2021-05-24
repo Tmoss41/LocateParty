@@ -57,10 +57,10 @@
       </li>
       </ul>
       
-      <%= form_with url: find_path, method: :get, class: 'd-flex' do |f| %>
-      <%= f.label :suburb %>
-      <%= f.text_field :suburb %></p>
-      <button ><%= f.submit 'Group Location Search'%></button>
+      <%= form_with url: nav_search_path, method: :get, class: 'd-flex' do |f| %>
+      <%= f.label :post_code %>
+      <%= f.text_field :post_code, placeholder: 'Postcode' %></p>
+      <button ><%= f.submit 'Search'%></button>
       <%# class="btn btn-outline-success" %>
       <% end %>
     </div>
