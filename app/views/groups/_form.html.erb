@@ -1,10 +1,18 @@
 <%= form_with model: @group do |f| %>
 <%= f.label :name %>
 <%= f.text_field :name %>
-<%= f.label :suburb %>
-<%= f.text_field :suburb %>
-<%= f.label :state %>
-<%= f.text_field :state %>
+<%= f.fields_for :location do |location| %>
+    <%= location.label :suburb %>  
+    <%= location.text_field :suburb %>
+    <br>
+    <%= location.label :state %>
+    <%= location.text_field :state %>
+    <br>
+    <%= location.label :postcode %>
+    <%= location.number_field :post_code%>
+    <br>
+    <%= location.hidden_field :group_id, value: @group.id%>
+<% end %>
 <%= f.file_field :group_images %>
 <%= f.submit%>
 <% end %>

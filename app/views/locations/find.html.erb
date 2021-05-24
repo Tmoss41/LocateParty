@@ -1,0 +1,11 @@
+<% @locations.each do |location| %>
+    <% if !location.group_id.nil? %>
+        <%= link_to location.group.name, group_path(location.group.id) %>
+    <% else %>
+        <%= link_to location.profile.full_name_to_csv, profile_path(location.profile.id) %>
+    <% end %>
+<% end %>
+
+<% if @location.nil?%>
+There are no matches to this post code
+<% end %>

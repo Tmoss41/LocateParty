@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'locations/find'
   # Routes Relating to User Model and Signup Functions
   devise_for :users, controllers: { sessions: 'users/sessions', registrations: 'users/registrations' }
   get 'user/:id', to: 'profiles#show', as: 'user'
@@ -8,13 +9,12 @@ Rails.application.routes.draw do
   resources :characters
   get 'user/:id/characters/new', to: 'characters#new', as: 'user_new_character'
   get 'user/:id/characters/edit', to: 'characters#edit', as: 'user_edit_character'
-  delete 'user/:id/characters/delete', to: 'characters#delete', as: 'user_delete_character'
+  delete 'characters/:id/delete', to: 'characters#delete', as: 'delete_character'
   get 'group/:id/find_user', to: 'profiles#find', as: 'find_profile'
   post 'group/:id/assign_admin', to: 'groups#make_admin', as: 'assign_admin'
   # Routes Relating to the Group CRUD Functionality
   post 'groups', to: 'groups#create'
-  post 'groups/find' , to: 'groups#find', as: 'find'
-  # post 'join', to: 'user_groups#join', as: 'join'
+  get 'groups/find' , to: 'groups#find', as: 'find'
   get 'groups/new', to: 'groups#new', as: 'new_group'
   get 'group/:id' , to: 'groups#show', as: 'group'
   delete 'group/:id', to: 'groups#delete', as: 'delete_group'
@@ -29,5 +29,6 @@ Rails.application.routes.draw do
   patch 'accepted_request', to: 'user_groups#approved'
   delete 'group/:id/delete_member', to: 'user_groups#destroy_member_in_group', as: 'delete_member'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  get 'search', to: 'locations#find', as: 'nav_search'
   resources :games, :profiles
 end

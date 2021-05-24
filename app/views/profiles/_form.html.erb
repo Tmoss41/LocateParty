@@ -10,8 +10,18 @@
 <%= f.label :mobile %>
 <%= f.text_field :mobile %>
 <br>
-<%= f.label :suburb %>
-<%= f.text_field :suburb %>
+<%= f.fields_for :location do |location| %>
+    <%= location.label :suburb %>  
+    <%= location.text_field :suburb %>
+    <br>
+    <%= location.label :state %>
+    <%= location.text_field :state %>
+    <br>
+    <%= location.label :postcode %>
+    <%= location.number_field :post_code%>
+    <br>
+    <%= location.hidden_field :user_id, value: current_user.id%>
+<% end %>
 <%= f.hidden_field :user_id, value: current_user.id %>
 <%= f.file_field :avatar %>
 <%= f.submit %>

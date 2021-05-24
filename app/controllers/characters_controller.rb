@@ -1,12 +1,11 @@
 class CharactersController < ApplicationController
+    before_action :authenticate_user!
     before_action :set_character, only: [:edit, :show, :update]
     def new 
         @character = Character.new
-        authorize @character
     end
     def create
         @character = current_user.characters.new(character_params)
-        authorize @character
         if @character.save
             redirect_to current_user
         else 
@@ -28,7 +27,9 @@ class CharactersController < ApplicationController
         end
     end
     def delete
-        Character.find(params[:id]).destroy
+        @character = Character.find(params[:id])
+        authorize @character
+        @character.destroy
         redirect_to current_user
     end
     private
@@ -36,6 +37,7 @@ class CharactersController < ApplicationController
         params.require(:character).permit(:name, :level, :alignment, :race, :character_class)
     end
     def set_character
-        @character = current_user.characters.find(params[:id])
+        @character = Character.find(params[:id])
+        @owner = @character.user
     end
 end

@@ -1,4 +1,5 @@
 class GroupsController < ApplicationController
+    before_action :authenticate_user!
     before_action :admin?, only: :show
     before_action :set_group, only: [:edit, :show, :delete, :update]
     before_action :authorize_group, only: [:edit, :delete, :update]
@@ -14,8 +15,8 @@ class GroupsController < ApplicationController
     def new
         # Saves a place in memory for a new  instance of a group and then redirects user to the new.html.erb page found in /views/groups
         @group = Group.new
-        @signed_in = authorize @group
-        if @signed_in
+        # @signed_in = authorize @group
+        if user_signed_in?
         else
             flash.alert = "You must be signed in to do this"
             redirect_to root_path
@@ -24,19 +25,20 @@ class GroupsController < ApplicationController
     def create
         # Takes data from the form on the new.html.erb page and creates a add query to the database using the parameters defined in private method, from webpage
         @group = current_user.groups.new(group_params)
-        authorize @group
-        if @group.save
+        if @group.save && user_signed_in?
             @usergroup = UserGroup.create(user_id: current_user.id, group_id: @group.id, approved: true, player_approval: true)
             @usergroup.add_role :group_admin
+            @location = Location.create(suburb: params[:group][:location][:suburb], state: params[:group][:location][:state], post_code: params[:group][:location][:post_code], group_id: @group.id)
             redirect_to current_user
         else
             flash.alert = @group.errors.full_messages
             redirect_to new_group_path
+        # render json: params
         end    
         # render plain: @group.errors.full_messages
     end
     def find
-        @groups = Group.where("name LIKE ? AND suburb like ? AND state like ?", "%#{params[:name]}%", "%#{params[:suburb]}%", "%#{params[:state]}%")
+        @locations = Location.where("state like ? AND suburb like ? AND post_code = ?", "%#{params[:state]}%", "%#{params[:suburb]}%", params[:post_code])
     end
     def delete
         @group.destroy
@@ -62,6 +64,9 @@ class GroupsController < ApplicationController
     def group_params
         # Permits different parameters to be allowed into database queries for methods relating to the Groups Model, 
         params.require(:group).permit(:name, :suburb, :state, :admin_name, :group_images)
+    end
+    def location_params
+        params.require(:group).require(:location).permit(:suburb, :state, :post_code, :group_id)
     end
     def admin?
         @admin =  UserGroup.where('user_id = ? and group_id = ?', current_user.id, params[:id])

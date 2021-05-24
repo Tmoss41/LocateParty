@@ -4,4 +4,8 @@
     <p>Level: <%= @character.level %></p>
     <p> Alignment: <%= @character.alignment %></p>
     <p> Class: <%= @character.character_class %></p>
+    <% if @owner.id == current_user.id%>
+    <%= link_to 'Edit', edit_character_path %>
+    <%= link_to 'Delete', delete_character_path, method: :delete, data: {confirm: 'Are you sure you want to delete this character'}%>
+    <% end %>
 </article>

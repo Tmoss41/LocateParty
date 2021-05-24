@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_22_045738) do
+ActiveRecord::Schema.define(version: 2021_05_24_100927) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,6 +91,18 @@ ActiveRecord::Schema.define(version: 2021_05_22_045738) do
     t.string "state"
   end
 
+  create_table "locations", force: :cascade do |t|
+    t.string "suburb"
+    t.integer "post_code"
+    t.string "state"
+    t.bigint "profile_id"
+    t.bigint "group_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["group_id"], name: "index_locations_on_group_id"
+    t.index ["profile_id"], name: "index_locations_on_profile_id"
+  end
+
   create_table "profiles", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
@@ -99,7 +111,6 @@ ActiveRecord::Schema.define(version: 2021_05_22_045738) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id", null: false
-    t.string "suburb"
     t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 
@@ -119,7 +130,7 @@ ActiveRecord::Schema.define(version: 2021_05_22_045738) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "approved", default: true
-    t.boolean "player_approval", default: true
+    t.boolean "player_approval"
     t.index ["group_id"], name: "index_user_groups_on_group_id"
     t.index ["user_id"], name: "index_user_groups_on_user_id"
   end
@@ -156,6 +167,8 @@ ActiveRecord::Schema.define(version: 2021_05_22_045738) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "characters", "users"
   add_foreign_key "games", "groups"
+  add_foreign_key "locations", "groups"
+  add_foreign_key "locations", "profiles"
   add_foreign_key "profiles", "users"
   add_foreign_key "user_groups", "groups"
   add_foreign_key "user_groups", "users"
