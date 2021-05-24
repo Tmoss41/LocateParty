@@ -2,10 +2,14 @@
 
 one:
   suburb: MyString
-  country: MyString
+  post_code: 1
   state: MyString
+  user: one
+  group: one
 
 two:
   suburb: MyString
-  country: MyString
+  post_code: 1
   state: MyString
+  user: two
+  group: two

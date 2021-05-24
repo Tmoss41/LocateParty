@@ -1,3 +1,4 @@
 class Location < ApplicationRecord
-    has_one :group
+  belongs_to :profile, optional: true
+  belongs_to :group, optional: true
 end

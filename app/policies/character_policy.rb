@@ -4,28 +4,25 @@ class CharacterPolicy
         @user = user
         @character = character
     end
-    def create?
-        signed_in?
-    end
     def new?
-        signed_in?
-    end
-    def edit?
-        signed_in?
+        owner_of_page?
     end
     def update?
-        signed_in?
+        owner?
+    end
+    def delete?
+        owner?
     end
     private
-    def signed_in?
-        case @user.class != NilClass
-        when true
+    def owner?
+        @owner = user.characters.where(id: character.id).present?
+        if @owner
             return true
-        when false
+        else 
             return false
         end
     end
-    def owner?
-        !!user.id == params[:id]
+    def owner_of_page?
+        !!user == params[:id]
     end
 end

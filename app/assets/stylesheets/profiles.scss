@@ -9,20 +9,16 @@
   }
 }
 .profile_card{
-    background-color: pink;
-    width: 50%; 
+    background-color: whitesmoke;
+    height: 250px;
+    // border: black solid 2px;
+    border-radius: 15px;
 }
 .character_card{
-    background-color: lightblue;
-    width: 100%; 
-    section{
-        display: flex;
-        flex-wrap: wrap;
-        div{
-            width: 25%;
-            border: none;
-        }
-    }
+    background-color: whitesmoke;
+    border-radius: 15px;
+    margin-top: 10px; 
+    // border: 2px solid black
 }
 .group_card{
     background-color: lightcoral;
@@ -37,4 +33,50 @@
 }
 .request_card{
     width: 25%;
+} 
+.container{
+    // background-color: rgba(245, 245, 245, 0.877);
+    border-radius: 15px;
+}
+
+.container-sm{
+    height: 150px;
+    overflow:scroll;
+}
+.character_scroll{
+    width: 30%;
+    background-color: rgb(189, 186, 186);
+    // border: black 2px solid;
+    border-radius: 25px;
+    margin: 5px;
+}
+.row{
+    flex-wrap: wrap;
+}
+.col{
+}
+
+.find_card{
+    background-color: whitesmoke;
+    height: 250px;
+    // border: black solid 2px;
+    border-radius: 15px;
+}
+.group_cards{
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: scroll;
+}
+.group_scroll{
+    width: 33%;
+}
+.character-name{
+    text-align:center;
+    font-size: 3vw;
+}
+.games_card{
+    display: flex;
+}
+.game-group{
+    // background-color: ÷;
 }

@@ -12,8 +12,14 @@ class ProfilesController < ApplicationController
         @profile = Profile.new
     end
     def create
-        @profile = Profile.create(profile_params)
-        redirect_to current_user
+        @profile = Profile.new(profile_params)
+        if @profile.save
+            @location = Location.create!(suburb: params[:profile][:location][:suburb], state: params[:profile][:location][:state], post_code: params[:profile][:location][:post_code], profile_id: @profile.id)
+            redirect_to current_user
+        else
+            flash.alert = "Error with profile creation, please try again"
+            redirect_to new_profile_path
+        end 
     end
     def edit
     @profile = Profile.find(params[:id])
@@ -21,6 +27,7 @@ class ProfilesController < ApplicationController
     def update
         @profile = Profile.find(params[:id])
         if @profile.update(profile_params)
+            @location = Location.update(suburb: params[:profile][:location][:suburb], state: params[:profile][:location][:state], post_code: params[:profile][:location][:post_code], profile_id: @profile.id)
             redirect_to current_user
         else
             flash.alert = @profile.errors.full_messages
@@ -28,11 +35,13 @@ class ProfilesController < ApplicationController
         end
     end
     def find
-        @profiles = Profile.where("first_name LIKE ? AND last_name like ? AND suburb like ?", "%#{params[:first_name]}%", "%#{params[:last_name]}%", "%#{params[:suburb]}%")
-        
+        @location = Location.where("suburb = ? AND state = ? AND post_code = ?", "%#{params[:suburb]}%", "%#{params[:state]}%", "#{params[:post_code]}")
     end
     private
     def profile_params
         params.require(:profile).permit(:first_name, :last_name, :bio, :user_id, :mobile, :suburb, :avatar)
+    end
+    def location_params
+        params.require(:profile).require(:location).permit(:suburb, :post_code, :state)
     end
 end

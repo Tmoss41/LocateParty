@@ -1,60 +1,63 @@
 <%# Main Profile Page, e.g Character List, Groups user is a part of, Events User is participating in %>
 <h1>Profile</h1> 
 <%= @user.email %>
-
-<article class='show_profile_page'>
-  <div class='profile_card'>
-    
-    <% case @user.profile.present? %>
-    <% when false %>
-      <%= link_to 'Create Profile', new_profile_path if @owner  %>
-    <% else %>
-    <% if @user.profile.avatar.attached? == true %>
-      <%= cl_image_tag current_user.profile.avatar.key, crop: :scale, width: 100, cloud_name: 'tmoss41' %>
-    <% end %>
-      <%= link_to 'Modify Profle', edit_profile_path(current_user.profile) if @owner %>
-      <p><%= @profile.first_name %></p>
-    <p><%= @profile.last_name %></p>
-    <p><%= @profile.bio %></p>
-    <p><%= @profile.mobile %></p>
-    <p><%= @profile.suburb %>
-
-    <% end %>
+<article>
+  <div class="container">
+    <div class="row align-items-start top_card">
+      <div class="col">
+        <% case @user.profile.present? %>
+        <% when false %>
+          <%= link_to 'Create Profile', new_profile_path if @owner  %>
+        <% else %>
+          <div class='container-lg profile_card'>
+            <% if @user.profile.avatar.attached? == true %>
+              <%= cl_image_tag current_user.profile.avatar.key, crop: :scale, width: 100, cloud_name: 'tmoss41' %>
+            <% end %>
+            <%= link_to 'Modify Profle', edit_profile_path(current_user.profile) if @owner %>
+            <p><%= @profile.first_name %></p>
+            <p><%= @profile.last_name %></p>
+            <p><%= @profile.bio %></p>
+            <p><%= @profile.mobile %></p>
+            <% if @profile.location.present? %>
+            <%= @profile.location.suburb %>
+            <%= @profile.location.post_code %>
+            <%= @profile.location.state %>
+            <% end %>
+            <%# <p><%= @profile.suburb %>
+          </div>
+      </div>
+      <div class="col">
+        <div class='container-lg find_card'>
+          <%= form_with url: find_path, method: :get do |f| %>
+            Suburb::<br>
+            <p><%= f.text_field :suburb %></p>
+            Post Code:<br>
+            <p><%= f.number_field :post_code %></p>
+            State: <br>
+            <p><%= f.text_field :state %></p>
+            <p><%= f.submit 'Find a Group' %></p>
+          <% end %>
+      </div>
+    </div>
   </div>
-  <% case @owner %>
-  <% when true%>
-  <div class="invite_card">
-    <h1> My Invites </h1>
-    <% @user.invite_pending_groups.each do |group| %>
-      <%= group.name %>
-      <%= link_to 'Accept', accept_invite_path(user_id: @user.id, group_id: group.id), method: :post %>
     <% end %>
-  </div>
-  <div class='request_card'>
-    <h1>Join Requests</h1>
-    <% @user.join_pending_groups.each do |group| %>
-    <%= group.name %>
-    <% end %>
-  </div>
-  <% end %>
+  
   <%# Character List Card %>
-  <div class = "character_card"> 
+  <div class = "container-md character_card"> 
     <h1>My Characters </h1>
     <br>
     <%= link_to 'New Character' , new_character_path if @owner%>
     <br>
     <section>
+    <div class="container">
+  <div class="row align-items-start">
       <% @user.characters.each do |character| %>
-        <div>
-          <h2><%= link_to character.name, character %></h2>
-          <p><%= character.race %></p> 
-          <p><%= character.alignment %></p>
-          <p><%= character.character_class %></p>
-          <p> Level: <%= character.level%></p>
-          <%= link_to 'Edit', user_edit_character_path(character) %>
-          <%= link_to 'Delete', user_delete_character_path(character), method: :delete %>
+        <div class="character_scroll">
+          <h2 class='character-name'><%= link_to character.name, character_url(character) %></h2>
         </div>
       <% end %>
+    </div>
+    </div>
       </section>
   </div>
 
@@ -66,41 +69,73 @@
   <%# Group List Card %>
   <%# If the user wants to find another group, this will link to the find.html.erb %>
 
+  
     
-  <div class='group_card'>
-    <%= form_with url: find_path, method: :get do |f| %>
-      <p>Group Name: <%= f.text_field :name %></p>
-      <p>Suburb: <%= f.text_field :suburb %></p>
-      <p>State: <%= f.text_field :state %></p>
-      <p><%= f.submit 'Find a Group' %></p>
-<% end %>
-    <h1> My Groups</h1>
-    <%= link_to 'New Group', new_group_path if @owner%>
-    <% @user.approved_groups.each do |group| %>
-        <h3><%=link_to group.name, group_path(group) %></h3>
-        <% group.users.each do |user| %>
-          <p><%= user.profile.full_name_to_csv %></p>
-          <% end %>
-      <% end %>
     <%# Authorizing Function, if User is an admin they will be able to create new groups %>
     
-
+<% case @owner %>
+<% when true%>
+  <div class = "container-md character_card"> 
+    <h1>My Groups </h1>
+    <br>
+    <%= link_to 'New Group', new_group_path if @owner%>
+    <br>
+    <section>
+    <div class="container">
+  <div class="row align-items-start">
+      <% @user.approved_groups.each do |group| %>
+        <div class="character_scroll">
+          <h3><%=link_to group.name, group_path(group) %></h3>
+          <% group.users.each do |user| %>
+            <p><%= user.profile.full_name_to_csv %></p>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    </div>
+      </section>
   </div>
 
-  <%# Game List Card %>
-
-  <div class="game_card">
-    <h1>My Games</h1>
-    <% @user.approved_groups.each do |group| %>
-      <h2><%= group.name %></h2>
+  <div class = "container-md games_card"> 
+    <h1>My Games </h1>
+    <section>
+    <div class="container">
+  <div class="row align-items-start">
+      <% @user.approved_groups.each do |group| %>
+      <div class="game-group">
+        <h2><%= group.name if group.games.present? %></h2>
       <% group.games.each do |game| %>  
         <strong><h5><%= game.name %></h5></strong>
         <p>Time of Game:<%= game.time %></p>
         <p>Date of Event: <%= game.date %></p>
+      </div>
       <% end %>
     <% end %>
+    </div>
+    </div>
+    </section>
   </div>
-
-  
-
+      
+<div class="container">
+  <div class="row align-items-start">
+    <div class="col">
+    <div class="container-sm">
+      <h1>Join Requests</h1>
+      <% @user.join_pending_groups.each do |group| %>
+        <%= group.name %>
+        <% end %>
+        </div>
+    </div>
+    <div class="col">
+      <div class="container-sm">
+       <h1> My Invites </h1>
+        <% @user.invite_pending_groups.each do |group| %>
+          <%= group.name %>
+          <%= link_to 'Accept', accept_invite_path(user_id: @user.id, group_id: group.id), method: :post %>
+        <% end %>
+        </div>
+    </div>
+  </div>
+</div>
+  <% end %>
 </article>

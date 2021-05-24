@@ -1,14 +1,11 @@
 <h1>Find</h1>
-<% @groups.each do |group| %>
-    <p><%= link_to group.name, group %></p>
-    <p>Number of Members: <%= group.approved_users.count %>
-    <p><% group.users.each do |member| %>
-        <%if member.has_role? :admin %>
-            <%= member.email %>
-        <% end %>
+<% @locations.each do |location| %>
+    <% if !location.group_id.nil? %>
+        <p><%= link_to location.group.name, group_path(location.group.id) %></p>
+    <p>Number of Members: <%= location.group.approved_users.count %>
     <%# <p><%= link_to 'Join', user_add_to_group_path , method: :post, onclick:  %></p>
     <% end %>
 <% end %>
-<% if !@groups.present?%>
+<% if !@locations.present?%>
     No Groups match that criteria
 <% end %>
