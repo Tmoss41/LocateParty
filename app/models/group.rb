@@ -12,7 +12,6 @@ class Group < ApplicationRecord
   has_many :invite_pending_users, through: :invite_pending_usergroups, source: :user
   validates :name, :suburb, :state, presence: true
   validates :name, uniqueness: true
-  validate :user_signed_in
   has_many_attached :group_images
   
 end

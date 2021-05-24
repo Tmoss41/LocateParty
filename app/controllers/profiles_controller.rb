@@ -16,12 +16,16 @@ class ProfilesController < ApplicationController
         redirect_to current_user
     end
     def edit
-        @profile = Profile.find(params[:id])
+    @profile = Profile.find(params[:id])
     end
     def update
         @profile = Profile.find(params[:id])
-        @profile.update(profile_params)
-        redirect_to current_user
+        if @profile.update(profile_params)
+            redirect_to current_user
+        else
+            flash.alert = @profile.errors.full_messages
+            redirect_to edit_profile_path(@profile)
+        end
     end
     def find
         @profiles = Profile.where("first_name LIKE ? AND last_name like ? AND suburb like ?", "%#{params[:first_name]}%", "%#{params[:last_name]}%", "%#{params[:suburb]}%")

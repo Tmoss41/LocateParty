@@ -68,7 +68,7 @@
 
     
   <div class='group_card'>
-    <%= form_with url: find_path, method: :post do |f| %>
+    <%= form_with url: find_path, method: :get do |f| %>
       <p>Group Name: <%= f.text_field :name %></p>
       <p>Suburb: <%= f.text_field :suburb %></p>
       <p>State: <%= f.text_field :state %></p>

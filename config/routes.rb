@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   post 'group/:id/assign_admin', to: 'groups#make_admin', as: 'assign_admin'
   # Routes Relating to the Group CRUD Functionality
   post 'groups', to: 'groups#create'
-  post 'groups/find' , to: 'groups#find', as: 'find'
+  get 'groups/find' , to: 'groups#find', as: 'find'
   # post 'join', to: 'user_groups#join', as: 'join'
   get 'groups/new', to: 'groups#new', as: 'new_group'
   get 'group/:id' , to: 'groups#show', as: 'group'

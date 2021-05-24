@@ -1,4 +1,5 @@
 class GroupsController < ApplicationController
+    before_action :authenticate_user!
     before_action :admin?, only: :show
     before_action :set_group, only: [:edit, :show, :delete, :update]
     before_action :authorize_group, only: [:edit, :delete, :update]
