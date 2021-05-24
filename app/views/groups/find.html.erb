@@ -9,3 +9,6 @@
     <%# <p><%= link_to 'Join', user_add_to_group_path , method: :post, onclick:  %></p>
     <% end %>
 <% end %>
+<% if !@groups.present?%>
+    No Groups match that criteria
+<% end %>

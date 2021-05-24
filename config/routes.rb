@@ -14,7 +14,6 @@ Rails.application.routes.draw do
   # Routes Relating to the Group CRUD Functionality
   post 'groups', to: 'groups#create'
   get 'groups/find' , to: 'groups#find', as: 'find'
-  # post 'join', to: 'user_groups#join', as: 'join'
   get 'groups/new', to: 'groups#new', as: 'new_group'
   get 'group/:id' , to: 'groups#show', as: 'group'
   delete 'group/:id', to: 'groups#delete', as: 'delete_group'

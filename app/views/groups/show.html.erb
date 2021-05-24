@@ -3,16 +3,16 @@
 <% if @group.group_images.attached? %>
     <% @group.group_images.each do |image| %>
         <%= cl_image_tag image.key %>
-        <%= link_to 'Delete' , delete_image_path(image_id: image.id), method: :delete %>
+        <%= link_to 'Delete' , delete_image_path(image_id: image.id), method: :delete, data: {confirm: 'Are you sure you want to delete this image?'} %>
     <% end %>
 <% end %>
 
-<h2>Current Members</h2><%= link_to 'Delete Group', group_path, method: :delete if @is_admin%>
+<h2>Current Members</h2><%= link_to 'Delete Group', group_path, method: :delete, data: {confirm: 'Are you sure you want to delete this group'} if @is_admin%>
 <p>Suburb: <%= @group.suburb %></p>
 <p>State: <%= @group.state %></p>
 <% @group.approved_users.each do |user| %>
     <p><%= user.profile.full_name_to_csv%></p>
-    <p><%= link_to 'Delete', delete_member_path(group_id: @group.id, user_id: user.id), method: :delete if @is_admin %></p>
+    <p><%= link_to 'Delete', delete_member_path(group_id: @group.id, user_id: user.id), method: :delete, data: {confirm: 'Are you sure you want to delete this member?'} if @is_admin %></p>
     <p><%= link_to 'Make Admin', assign_admin_path(group_id: @group.id, user_id: user.id), method: :post, remote: true if !user.user_groups.where(user_id: user.id, group_id: @group.id).first.has_role? :group_admin %></p>
 <% end %>
 <% if @is_admin %>
@@ -35,8 +35,8 @@
     <p> You are an admin </p>
     <%= member.email %>
     <%= member.id %>
-    <%= link_to 'Accept' , accept_request_path(user_id: member.id, group_id: params[:id]), method: :post %>
-    <%= link_to 'Delete', delete_member_path(group_id: params[:id], user_id: member.id), method: :delete %>
+    <%= link_to 'Accept' , accept_request_path(user_id: member.id, group_id: params[:id]), method: :post, data: {confirm: 'Are you sure you want to accept this request?'} %>
+    <%= link_to 'Delete', delete_member_path(group_id: params[:id], user_id: member.id), method: :delete, data: {confirm: 'Are you sure you want to reject this request?'} %>
 <% end %>
 <% end %>
 </div>
