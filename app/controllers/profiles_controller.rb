@@ -1,9 +1,14 @@
 class ProfilesController < ApplicationController
     def show
         @user = User.find(params[:id])
+        @characters = @user.characters.pluck(:id, :name)
+        @approved_groups = @user.approved_groups
+        @un_approved_groups = @user.un_approved_groups
         @groups = UserGroup.where(user_id: current_user.id)
         @profile = @user.profile
         @owner = current_user.id == @user.id
+        @pending = @user.join_pending_groups.pluck(:name)
+        @invites = @user.invite_pending_groups.pluck(:name, :id)
     end
     # def find_group
     #     @users = Group.where("name LIKE ? AND suburb like ? AND state like ?", "%#{params[:name]}%", "%#{params[:suburb]}%", "%#{params[:state]}%")
@@ -35,7 +40,7 @@ class ProfilesController < ApplicationController
         end
     end
     def find
-        @location = Location.where("suburb = ? AND state = ? AND post_code = ?", "%#{params[:suburb]}%", "%#{params[:state]}%", "#{params[:post_code]}")
+        @location = Location.where("suburb like ? AND state like ? AND post_code = ?", "%#{params[:suburb]}%", "%#{params[:state]}%", "#{params[:post_code]}")
     end
     private
     def profile_params

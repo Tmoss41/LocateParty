@@ -10,8 +10,8 @@
           <%= link_to 'Create Profile', new_profile_path if @owner  %>
         <% else %>
           <div class='container-lg profile_card'>
-            <% if @user.profile.avatar.attached? == true %>
-              <%= cl_image_tag current_user.profile.avatar.key, crop: :scale, width: 100, cloud_name: 'tmoss41' %>
+            <% if @profile.avatar.attached? == true %>
+              <%= cl_image_tag @profile.avatar.key, crop: :scale, width: 100, cloud_name: 'tmoss41' %>
             <% end %>
             <%= link_to 'Modify Profle', edit_profile_path(current_user.profile) if @owner %>
             <p><%= @profile.first_name %></p>
@@ -51,9 +51,9 @@
     <section>
     <div class="container">
   <div class="row align-items-start">
-      <% @user.characters.each do |character| %>
+      <% @characters.each do |character| %>
         <div class="character_scroll">
-          <h2 class='character-name'><%= link_to character.name, character_url(character) %></h2>
+          <h2 class='character-name'><%= link_to character[1], character_url(character[0]) %></h2>
         </div>
       <% end %>
     </div>
@@ -83,12 +83,9 @@
     <section>
     <div class="container">
   <div class="row align-items-start">
-      <% @user.approved_groups.each do |group| %>
+      <% @approved_groups.each do |group| %>
         <div class="character_scroll">
           <h3><%=link_to group.name, group_path(group) %></h3>
-          <% group.users.each do |user| %>
-            <p><%= user.profile.full_name_to_csv %></p>
-          <% end %>
         </div>
       <% end %>
     </div>
@@ -101,7 +98,7 @@
     <section>
     <div class="container">
   <div class="row align-items-start">
-      <% @user.approved_groups.each do |group| %>
+      <% @approved_groups.each do |group| %>
       <div class="game-group">
         <h2><%= group.name if group.games.present? %></h2>
       <% group.games.each do |game| %>  
@@ -121,17 +118,17 @@
     <div class="col">
     <div class="container-sm">
       <h1>Join Requests</h1>
-      <% @user.join_pending_groups.each do |group| %>
-        <%= group.name %>
+      <% @pending.each do |group| %>
+        <%= group %>
         <% end %>
         </div>
     </div>
     <div class="col">
       <div class="container-sm">
        <h1> My Invites </h1>
-        <% @user.invite_pending_groups.each do |group| %>
-          <%= group.name %>
-          <%= link_to 'Accept', accept_invite_path(user_id: @user.id, group_id: group.id), method: :post %>
+        <% @invites.each do |group| %>
+          <%=group[0] %>
+          <%= link_to 'Accept', accept_invite_path(user_id: @user.id, group_id: group[1]), method: :post %>
         <% end %>
         </div>
     </div>
