@@ -54,6 +54,7 @@
       <% @characters.each do |character| %>
         <div class="character_scroll">
           <h2 class='character-name'><%= link_to character[1], character_url(character[0]) %></h2>
+          <h4 class='character-race'><%= character[2] %></h4>
         </div>
       <% end %>
     </div>

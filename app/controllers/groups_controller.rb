@@ -1,10 +1,9 @@
 class GroupsController < ApplicationController
     before_action :authenticate_user!
     before_action :admin?, only: :show
-    before_action :set_group, only: [:edit, :show, :delete, :update]
+    before_action :set_group, only: [:edit, :show, :delete, :update, :show, :attach_image]
     before_action :authorize_group, only: [:edit, :delete, :update]
     def show
-        @group = Group.find(params[:id])
         # Shows a specific group based on the id passed through from the webpage of the user=
     end
     def make_admin
@@ -15,12 +14,6 @@ class GroupsController < ApplicationController
     def new
         # Saves a place in memory for a new  instance of a group and then redirects user to the new.html.erb page found in /views/groups
         @group = Group.new
-        # @signed_in = authorize @group
-        if user_signed_in?
-        else
-            flash.alert = "You must be signed in to do this"
-            redirect_to root_path
-        end
     end
     def create
         # Takes data from the form on the new.html.erb page and creates a add query to the database using the parameters defined in private method, from webpage
@@ -38,7 +31,12 @@ class GroupsController < ApplicationController
         # render plain: @group.errors.full_messages
     end
     def find
-        @locations = Location.where("state like ? AND suburb like ? AND post_code = ?", "%#{params[:state]}%", "%#{params[:suburb]}%", params[:post_code])
+        if params[:post_code].length == 4
+            @location = Location.where("suburb like ? AND state like ? AND post_code = ?", "%#{params[:suburb]}%", "%#{params[:state]}%", "#{params[:post_code]}")
+        else
+            flash.notice = "Invalid Postcode"
+            redirect_to current_user
+        end 
     end
     def delete
         @group.destroy
@@ -46,7 +44,13 @@ class GroupsController < ApplicationController
     end
     def update
         if @group.update(group_params)
-            redirect_to @group
+            @location = @group.location
+            if @location.update(suburb: params[:group][:location][:suburb], state: params[:group][:location][:state], post_code: params[:group][:location][:post_code], group_id: @group.id)
+                redirect_to @group
+            else
+                flash.alert = @location.errors.full_messages
+                redirect_to edit_group_path(@group)
+            end
         else
             flash.alert = @group.errors.full_messages
             redirect_to edit_group_path(@group)
@@ -54,6 +58,10 @@ class GroupsController < ApplicationController
 
     end
     def edit
+    end
+    def attach_image
+        @group.group_images.attach(params[:group][:group_images])
+        redirect_to @group
     end
     def destroy_image
         @image = Group.find(params[:id]).group_images.find(params[:image_id])

@@ -1,7 +1,9 @@
 class ProfilesController < ApplicationController
+    before_action :authenticate_user!
+    before_action :set_profile, only: [:edit, :update]
     def show
         @user = User.find(params[:id])
-        @characters = @user.characters.pluck(:id, :name)
+        @characters = @user.characters.pluck(:id, :name, :race)
         @approved_groups = @user.approved_groups
         @un_approved_groups = @user.un_approved_groups
         @groups = UserGroup.where(user_id: current_user.id)
@@ -19,34 +21,48 @@ class ProfilesController < ApplicationController
     def create
         @profile = Profile.new(profile_params)
         if @profile.save
-            @location = Location.create!(suburb: params[:profile][:location][:suburb], state: params[:profile][:location][:state], post_code: params[:profile][:location][:post_code], profile_id: @profile.id)
-            redirect_to current_user
+                @location = Location.new(suburb: params[:profile][:location][:suburb], state: params[:profile][:location][:state], post_code: params[:profile][:location][:post_code], profile_id: @profile.id)
+            if @location.save
+                redirect_to current_user
+            else
+                flash.alert = @location.errors.full_messages
+                redirect_to new_profile_path
+            end
         else
-            flash.alert = "Error with profile creation, please try again"
+            flash.alert = @profile.errors.full_messages
             redirect_to new_profile_path
         end 
     end
     def edit
-    @profile = Profile.find(params[:id])
     end
     def update
-        @profile = Profile.find(params[:id])
+        authorize @profile
         if @profile.update(profile_params)
-            @location = Location.update(suburb: params[:profile][:location][:suburb], state: params[:profile][:location][:state], post_code: params[:profile][:location][:post_code], profile_id: @profile.id)
-            redirect_to current_user
+            @location = @profile.location
+            if @location.update(suburb: params[:profile][:location][:suburb], state: params[:profile][:location][:state], post_code: params[:profile][:location][:post_code], profile_id: @profile.id)
+                redirect_to current_user
+            else
+                flash.alert = @location.errors.full_messages
+                redirect_to edit_profile_path(@profile)
+            end
         else
             flash.alert = @profile.errors.full_messages
             redirect_to edit_profile_path(@profile)
         end
     end
     def find
-        @location = Location.where("suburb like ? AND state like ? AND post_code = ?", "%#{params[:suburb]}%", "%#{params[:state]}%", "#{params[:post_code]}")
+        if params[:post_code].length == 4
+            @location = Location.where("suburb like ? AND state like ? AND post_code = ?", "%#{params[:suburb]}%", "%#{params[:state]}%", "#{params[:post_code]}")
+        else
+            flash.notice = "Invalid Postcode"
+            redirect_to current_user
+        end 
     end
     private
     def profile_params
         params.require(:profile).permit(:first_name, :last_name, :bio, :user_id, :mobile, :suburb, :avatar)
     end
-    def location_params
-        params.require(:profile).require(:location).permit(:suburb, :post_code, :state)
+    def set_profile
+        @profile = Profile.find(params[:id])
     end
 end
