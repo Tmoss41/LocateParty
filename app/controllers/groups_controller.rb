@@ -18,13 +18,15 @@ class GroupsController < ApplicationController
     def create
         # Takes data from the form on the new.html.erb page and creates a add query to the database using the parameters defined in private method, from webpage
         @group = current_user.groups.new(group_params)
-        if @group.save && user_signed_in?
+        @location = Location.new(suburb: params[:group][:location][:suburb], state: params[:group][:location][:state], post_code: params[:group][:location][:post_code], group_id: @group.id)
+        if @group.save && @location.save
             @usergroup = UserGroup.create(user_id: current_user.id, group_id: @group.id, approved: true, player_approval: true)
             @usergroup.add_role :group_admin
-            @location = Location.create(suburb: params[:group][:location][:suburb], state: params[:group][:location][:state], post_code: params[:group][:location][:post_code], group_id: @group.id)
-            redirect_to current_user
+            redirect_to @group
         else
-            flash.alert = @group.errors.full_messages
+            @group.destroy
+            @location.destroy
+            flash.alert = @location.errors.full_messages
             redirect_to new_group_path
         # render json: params
         end    
