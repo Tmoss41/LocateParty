@@ -59,7 +59,7 @@
       
       <%= form_with url: nav_search_path, method: :get, class: 'd-flex' do |f| %>
       <%= f.label :post_code %>
-      <%= f.text_field :post_code, placeholder: 'Postcode' %></p>
+      <%= f.number_field :post_code, placeholder: 'Postcode' %></p>
       <button ><%= f.submit 'Search'%></button>
       <%# class="btn btn-outline-success" %>
       <% end %>

@@ -21,7 +21,7 @@
         <%= f.label :suburb %>
         <%= f.text_field :suburb %>
         <%= f.label :post_code %>
-        <%= f.text_field :post_code %>
+        <%= f.number_field :post_code %>
         <%= f.label :state %>
         <%= f.text_field :state %>
         <%= f.submit 'Find a Player' %>
@@ -54,9 +54,9 @@
   <% end %>
 </div>
 
-<%= form_with model: @group do |f| %>
+<%= form_with model: @group, url: group_image_upload_path, method: :post do |f| %>
 <%= f.file_field :group_images%>
-<%= f.submit %>
+<%= f.submit 'Add Image' %>
 <% end %>
 <% case @group.users.where('email = ?', "#{current_user.email}").exists? %>
 <% when false %>
