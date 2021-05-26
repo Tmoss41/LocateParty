@@ -12,7 +12,8 @@
 <p>State: <%= @group.location.state %></p>
 <p>Post Code: <%= @group.location.post_code%>
 <% @group.approved_users.each do |user| %>
-    <p><%= user.profile.full_name_to_csv%></p>
+    <p><%= user.profile.full_name_to_csv if user.profile.present?%></p>
+    <p><%= user.email if !user.profile.present?%>
     <p><%= link_to 'Delete', delete_member_path(group_id: @group.id, user_id: user.id), method: :delete, data: {confirm: 'Are you sure you want to delete this member?'} if @is_admin %></p>
     <p><%= link_to 'Make Admin', assign_admin_path(group_id: @group.id, user_id: user.id), method: :post, remote: true if !user.user_groups.where(user_id: user.id, group_id: @group.id).first.has_role? :group_admin %></p>
 <% end %>

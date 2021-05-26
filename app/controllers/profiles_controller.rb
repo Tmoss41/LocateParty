@@ -47,8 +47,6 @@ class ProfilesController < ApplicationController
                 redirect_to edit_profile_path(@profile)
             end
         else
-            @profile.destroy
-            @location.destroy
             flash.alert = @profile.errors.full_messages
             redirect_to edit_profile_path(@profile)
         end
