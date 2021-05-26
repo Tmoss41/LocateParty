@@ -25,6 +25,7 @@ class ProfilesController < ApplicationController
             if @location.save
                 redirect_to current_user
             else
+                @profile.destroy
                 flash.alert = @location.errors.full_messages
                 redirect_to new_profile_path
             end
