@@ -15,7 +15,6 @@ class User < ApplicationRecord
   has_many :join_pending_groups, through: :join_pending_usergroups, source: :group
   has_many :invite_pending_usergroups, -> { invite_pending }, class_name: 'UserGroup'
   has_many :invite_pending_groups, through: :invite_pending_usergroups, source: :group
-  has_one_attached :profile_image
   has_one :profile, dependent: :destroy
   
 end
