@@ -1,13 +1,17 @@
-<h1>Find</h1>
-<%  if !@locations.nil? %>
-<% @locations.each do |location| %>
-    <% if !location.group_id.nil? %>
-        <p><%= link_to location.group.name, group_path(location.group.id) %></p>
-    <p>Number of Members: <%= location.group.approved_users.count %>
-    <%# <p><%= link_to 'Join', user_add_to_group_path , method: :post, onclick:  %></p>
+<% if !@location.present? %>
+        <div>No Groups Match that Criteria</div>
+        <% else %>
+        <div class='find_main_card'>
+            <% @location.each do |location| %>
+            <% if location.group.present? %>
+                <div class='find_entry_card'>
+                    <h1><%= link_to location.group.name, group_path(location.group.id) %></h1>
+                    <p>Number of Members: <%= location.group.approved_users.count %></p>
+                    <%# <p><%= link_to 'Join', user_add_to_group_path , method: :post %>
+                </div>
+                    <% end %>
+            <% end %>
+        </div>
+    </div>
     <% end %>
-<% end %>
-<% end%>
-<% if !@locations.present?%>
-    No Groups match that criteria
-<% end %>
+<div> 

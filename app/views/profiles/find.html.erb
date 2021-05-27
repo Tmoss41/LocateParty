@@ -1,15 +1,18 @@
     <% if !@location.present? %>
         <div>No Players Match that Criteria</div>
         <% else %>
+        <div class='find_main_card'>
             <% @location.each do |location| %>
             <% if location.profile.present? %>
-                <div>
+                <div class='find_entry_card'>
                     Name: <%=link_to  location.profile.full_name_to_csv, profile_path(location.profile.id) %>
                     <p>Suburb: <%= location.suburb %></p>
                     <p>State: <%= location.state %></p>
                     <%= link_to 'Invite',  user_groups_path(user_id: location.profile.user.id, group_id: params[:id], player_approval: false, approved: true), method: :post %>
+                </div>
                     <% end %>
             <% end %>
+        </div>
     </div>
     <% end %>
 <div> 

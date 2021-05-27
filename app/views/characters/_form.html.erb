@@ -1,13 +1,23 @@
 <%= form_with model: @character do |f| %>
-<%= f.label :name %>
-<p><%= f.text_field :name %></p>
-<p><%= f.label :race %></p>
-<p><%= f.collection_select :race, ['DragonBorn', 'Dwarf', 'Elf', 'Gnome','Half-Elf', 'Halfling', 'Half-Orc', 'Human', 'Tiefling'], :to_s, :to_s %></p>
-<p><%= f.label :alignment %></p>
-<p><%= f.collection_select :alignment, ['Chaotic Good', 'Neutral Good', 'Lawful Good', 'Chaotic Neutral', 'Neutral', 'Lawful Neutral', 'Chaotic Evil', 'Neutral Evil', 'Lawful Evil'], :to_s, :to_s %></p>
-<p><%= f.label :level %></p>
-<p><%= f.number_field :level %></p>
-<p><%= f.label :class %></p>
-<p><%= f.collection_select :character_class, ['Barbarian', 'Fighter', 'Paladin', 'Bard', 'Sorcerer', 'Warlock', 'Cleric', 'Druid', 'Monk', 'Ranger', 'Ropgue'], :to_s, :to_s %></p>
-<%= f.submit %>
+    <div class="mb-3">
+        <%= f.label :name, class: 'form-label' %>
+        <p><%= f.text_field :name , class: 'form-control'%></p>
+    </div>
+    <div class="mb-3">
+        <p><%= f.label :race, class: 'form-label' %></p>
+        <p><%= f.collection_select :race, ['DragonBorn', 'Dwarf', 'Elf', 'Gnome','Half-Elf', 'Halfling', 'Half-Orc', 'Human', 'Tiefling'], :to_s, :to_s, class: 'form-control' %></p>
+    </div>
+    <div class="mb-3">
+        <p><%= f.label :alignment, class: 'form-label' %></p>
+        <p><%= f.collection_select :alignment, ['Chaotic Good', 'Neutral Good', 'Lawful Good', 'Chaotic Neutral', 'Neutral', 'Lawful Neutral', 'Chaotic Evil', 'Neutral Evil', 'Lawful Evil'], :to_s, :to_s, class: 'form-control' %></p>
+    </div>
+    <div class="mb-3">
+        <p><%= f.label :level, class: 'form-label' %></p>
+        <p><%= f.number_field :level , class: 'form-control'%></p>
+    </div>
+    <div class="mb-3">
+        <p><%= f.label :character_class, class: 'form-label' %></p>
+        <p><%= f.collection_select :character_class, ['Barbarian', 'Fighter', 'Paladin', 'Bard', 'Sorcerer', 'Warlock', 'Cleric', 'Druid', 'Monk', 'Ranger', 'Ropgue'], :to_s, :to_s , class: 'form-control'%></p>
+    </div>
+    <%= f.submit class: 'btn btn-dark' %>
 <% end %>
