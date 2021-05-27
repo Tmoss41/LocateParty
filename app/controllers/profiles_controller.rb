@@ -41,7 +41,7 @@ class ProfilesController < ApplicationController
         authorize @profile # Checks that the user is the owner of the profile
         if @profile.update(profile_params) # Attempts to update profile with new params 
             # If succesful, then tries to update location with new params
-            @location = @profile.location 
+            @location = Location.find_by_profile_id(@profile.id)
             if @location.update(location_params(@profile.id)) # If location update is sucesful, then returns the user to their profile page
                 redirect_to current_user
             else
@@ -77,7 +77,7 @@ class ProfilesController < ApplicationController
     end
     def location_params(profile)
         # Sets the allowed paramns for location
-        params[:profile][:location][:group_id] = profile
+        params[:profile][:location][:profile_id] = profile
         params.require(:profile).require(:location).permit(:suburb, :state, :post_code, :profile_id)
     end
 end
