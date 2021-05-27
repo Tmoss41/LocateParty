@@ -31,5 +31,6 @@ Rails.application.routes.draw do
   delete 'group/:id/delete_member', to: 'user_groups#destroy_member_in_group', as: 'delete_member'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   get 'search', to: 'locations#find', as: 'nav_search'
+  get '/404', to: 'errors#not_found'
   resources :games, :profiles
 end

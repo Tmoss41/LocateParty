@@ -26,6 +26,7 @@
             <%# <p><%= @profile.suburb %>
           </div>
       </div>
+      <% if @owner %>
       <div class="col">
         <div class='container-lg find_card'>
           <%= form_with url: find_path, method: :get do |f| %>
@@ -40,6 +41,7 @@
       </div>
     </div>
   </div>
+  <% end %>
     <% end %>
   
   <%# Character List Card %>
