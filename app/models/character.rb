@@ -1,8 +1,13 @@
 class Character < ApplicationRecord
-  belongs_to :user
-  validates :name, :race, :character_class, :level, presence: true
-  validates :level, numericality: true, inclusion: {in: 1..20, message: 'Value should be between 1 and 20'}
-  validate :validate_class, :validate_race, :validate_alignment
+  belongs_to :user # Associates the model with the User model
+  validates :name, :race, :character_class, :level, presence: true # Validates that all of the columns defined in this line contain content and are not nil
+  validates :level, numericality: true, inclusion: {in: 1..20, message: 'Value should be between 1 and 20'} #  Validates that what is passed to fill in the level column, consists of only numbers, and that the number passed is only between 1 and 20
+  validate :validate_class, :validate_race, :validate_alignment # Runs vlaidation methods defined below in the model and ensures that they all pass before a record can be saved.StandardError
+
+
+  # The below methods are all nearly identical in nature
+  # They all run a check agianst an array and ensure that the column that is trying to be filled match the available options
+  # If they dont, then a error is raised and displayed on the page. 
   def validate_class
     classes = ['Barbarian', 'Fighter', 'Paladin', 'Bard', 'Sorcerer', 'Warlock', 'Cleric', 'Druid', 'Monk', 'Ranger', 'Rogue']
     if !classes.include?(character_class.capitalize)

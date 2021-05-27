@@ -104,8 +104,8 @@
         <h2><%= group.name if group.games.present? %></h2>
       <% group.games.each do |game| %>  
         <strong><h5><%= game.name %></h5></strong>
-        <p>Time of Game:<%= game.time %></p>
-        <p>Date of Event: <%= game.date %></p>
+        <p>Time of Game:<%= game.time.strftime("%H:%M:%S") %></p>
+        <p>Date of Event: <%= game.date.strftime("%d/%m/%Y") %></p>
       </div>
       <% end %>
     <% end %>

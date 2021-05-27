@@ -1,3 +1,67 @@
 // Place all the styles related to the groups controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+.form{
+    display: flex;
+    justify-content: flex-start;
+    flex: 1;
+}
+.game_card{
+    display: flex;
+    flex-wrap: wrap;
+}
+.card{
+    display: flex;
+    flex-wrap: wrap;
+    width: 50%;
+    margin-right: 0;
+}
+.container{
+    flex-wrap: wrap;
+}
+.group_details_card{
+    height: 350px;
+    background-color: rgb(141, 141, 141);
+    border-radius: 15px;
+}
+.find_player_card{
+    height: 350px;
+    background-color: rgb(141, 141, 141);
+    border-radius: 15px;
+}
+.members_card{
+    background-color: rgb(141, 141, 141);
+    border-radius: 15px;
+    margin-top: 10px;
+}
+.pending_card{
+    border-radius: 15px;
+    margin-top: 10px;
+    background-color: rgb(141, 141, 141);
+}
+.games_card{
+    border-radius: 15px;
+    margin-top: 10px;
+    margin-left: 10px;
+    overflow: scroll;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: rgb(141, 141, 141);
+    height: 400px;
+}
+.new_game_form_card{
+    background-color: rgb(141, 141, 141);
+    border-radius: 15px;
+    margin-top: 10px;
+    height: 400px;
+    form{
+        border: none;
+    }
+}
+
+.group_game_card{
+    width: 100%;
+    margin: 10px;
+    background-color: whitesmoke;
+    border-radius: 10px;
+}
