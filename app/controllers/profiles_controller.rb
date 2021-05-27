@@ -63,7 +63,7 @@ class ProfilesController < ApplicationController
         else
             # Fails if the post_code does not pass the valid check
             flash.notice = "Invalid Postcode"
-            redirect_to current_user
+            redirect_to group_path(params[:id])
         end 
     end
     private

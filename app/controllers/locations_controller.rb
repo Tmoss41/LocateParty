@@ -1,4 +1,5 @@
 class LocationsController < ApplicationController
+  before_action  :authenticate_user!
   # The find action relates to the form in the navigation bar that users can use to search for players or groups via post code
   def find
       if  post_code_valid? # Runs the method post_code_valid, and returns a boolean value
