@@ -1,8 +1,8 @@
 <% @locations.each do |location| %>
     <% if !location.group_id.nil? %>
-        <%= link_to location.group.name, group_path(location.group.id) %>
+        <%= link_to location.group.name, group_path(location.group.id) if location.group.present?%>
     <% else %>
-        <%= link_to location.profile.full_name_to_csv, profile_path(location.profile.id) %>
+        <%= link_to location.profile.full_name_to_csv, profile_path(location.profile.id) if location.profile.present? %>
     <% end %>
 <% end %>
 
