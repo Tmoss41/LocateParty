@@ -30,7 +30,6 @@
             <%= location.number_field :post_code, class: 'form-control' %>
         </div>
         <div class="mb-3">
-            <%= location.hidden_field :user_id, value: current_user.id%>
         <% end %>
         <%= f.hidden_field :user_id, value: current_user.id %>
         <%= f.file_field :avatar %>
