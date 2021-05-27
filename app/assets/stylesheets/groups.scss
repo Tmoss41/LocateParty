@@ -65,3 +65,35 @@
     background-color: whitesmoke;
     border-radius: 10px;
 }
+.find_entry_card{
+    background-color: whitesmoke;
+    width: 50%;
+    text-align: center;
+    margin: 5px;
+    border-radius: 15px;
+}
+.find_main_card{
+    display: flex;
+}
+.padlock{
+    height: 200px;
+    position: relative;
+    padding: 50px;
+    margin: 50px;
+}
+.padlock_games{
+    height: 200px;
+    position: relative;
+    padding: 50px;
+    margin: 100px 250px ;
+}
+.image_card{
+    box-shadow: 2px 5px rgb(141, 141, 141);
+    text-align: center;
+}
+.image_display{
+    flex-wrap: wrap;
+}
+.form_add_image{
+    text-align: center;
+}

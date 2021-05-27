@@ -1,3 +1,29 @@
 // Place all the styles related to the locations controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+.column{
+    width: 50%;
+    margin: 5px;
+}
+.search_card_item{
+    background-color: whitesmoke;
+    font-size: 2em;
+    text-align: center;
+    height: 100px;
+    padding-top: 25px;
+    box-shadow: 2px 2px rgb(189, 187, 187) ;
+    border-radius: 10px;
+}
+.search_card{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+.title{
+    display:flex;
+    h1{
+        width: 50%;
+        text-align: center;
+    }
+}
